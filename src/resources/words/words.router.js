@@ -1,52 +1,44 @@
 const router = require('express').Router();
 const WordsModel = require('./words.model');
-// const userService = require('./words.service');
 const wrapAsync = require('../../utils/wrapAsync');
+const { PER_PAGE } = require('../../common/config');
+const { BadRequest } = require('../../errors/appErrors');
 
 router.route('/').get(
   wrapAsync(async (req, res) => {
-    WordsModel.find({}, (err, docs) => {
+    const page = req.query.page ? +req.query.page : 0;
+    const perPage =
+      req.query.perPage && req.query.perPage <= PER_PAGE
+        ? +req.query.perPage
+        : PER_PAGE;
+
+    if (isNaN(page) || isNaN(perPage)) {
+      throw new BadRequest('Wrong query parameters, should be a valid integer');
+    }
+
+    WordsModel.find()
+      .limit(perPage)
+      .skip(page * perPage)
+      .exec({}, (err, docs) => {
+        if (!err) {
+          res.status(200).send(docs);
+        } else {
+          throw err;
+        }
+      });
+  })
+);
+
+router.route('/count').get(
+  wrapAsync(async (req, res) => {
+    WordsModel.countDocuments({}, (err, count) => {
       if (!err) {
-        console.log(docs);
-        res.status(200).send(docs);
+        res.status(200).send({ count });
       } else {
         throw err;
       }
     });
   })
 );
-/*
-
-router.route('/:id').get(
-  wrapAsync(async (req, res) => {
-    // const word = await userService.get(req.params.id);
-    // res.status(200).send(WordsModel.toResponse(word));
-  })
-);
-
-router.route('/:id').delete(
-  wrapAsync(async (req, res) => {
-    // await userService.remove(req.params.id);
-    // res.sendStatus(200);
-  })
-);
-
-router.route('/').post(
-  wrapAsync(async (req, res) => {
-    // const word = await userService.save(WordsModel.fromRequest(req.body));
-    // res.status(200).send(WordsModel.toResponse(word));
-  })
-);
-
-router.route('/:id').put(
-  wrapAsync(async (req, res) => {
-    // const word = await userService.update(
-    //   req.params.id,
-    //   WordsModel.fromRequest(req.body)
-    // );
-    // res.status(200).send(WordsModel.toResponse(word));
-  })
-);
-*/
 
 module.exports = router;
