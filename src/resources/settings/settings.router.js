@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Model = require('./statistic.model');
+const Model = require('./settings.model');
 const wrapAsync = require('../../utils/wrapAsync');
 
 router.route('/').get(

@@ -42,6 +42,15 @@ components:
           type: array
           items:
             type: any
+    Settings:
+      type: object
+      properties:
+        wordsPerDay:
+          type: number
+        optional:
+          type: array
+          items:
+            type: any
 #    User:
 #      type: object
 #      properties:
@@ -131,8 +140,8 @@ paths:
     post:
       tags:
         - Statistics
-      summary: Create statistic
-      description: Creates a new statistic
+      summary: Create statistics
+      description: Creates a new statistics
       requestBody:
         required: true
         content:
@@ -150,7 +159,7 @@ paths:
                     type: any
       responses:
         200:
-          description: The statistic has been created.
+          description: The statistics has been created.
           content:
             application/json:
               schema:
@@ -169,8 +178,8 @@ paths:
     get:
       tags:
         - Statistics
-      summary: Get statistic by id
-      description: Gets a statistic by id
+      summary: Get statistics by id
+      description: Gets a statistics by id
         e.g. “/statistics/123”
       responses:
         200:
@@ -186,8 +195,8 @@ paths:
     put:
       tags:
         - Statistics
-      summary: Update a statistic
-      description: Updates a statistic by id
+      summary: Update a statistics
+      description: Updates a statistics by id
       requestBody:
         required: true
         content:
@@ -205,7 +214,7 @@ paths:
                     type: any
       responses:
         200:
-          description: The statistic has been updated.
+          description: The statistics has been updated.
           content:
             application/json:
               schema:
@@ -217,11 +226,127 @@ paths:
     delete:
       tags:
         - Statistics
-      summary: Delete statistic
-      description: Deletes statistic by id
+      summary: Delete statistics
+      description: Deletes statistics by id
       responses:
         204:
-          description: The statistic has been deleted
+          description: The statistics has been deleted
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Statistic not found
+
+  /settings:
+    get:
+      tags:
+        - Statistics
+      summary: Get all settings
+      description: Gets all settings
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Settings"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      tags:
+        - Settings
+      summary: Create settings
+      description: Creates a new settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                wordsPerDay:
+                  type: number
+                  description: The max number of learned words per day
+                optional:
+                  type: array
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The settings has been created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Settings"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /settings/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Settings
+      summary: Get settings by id
+      description: Gets a settings by id
+        e.g. “/settings/123”
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Settings"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Statistic not found
+    put:
+      tags:
+        - Settings
+      summary: Update a settings
+      description: Updates a settings by id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                wordsPerDay:
+                  type: number
+                  description: The max number of learned words per day
+                optional:
+                  type: array
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The settings has been updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Settings"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - Settings
+      summary: Delete settings
+      description: Deletes settings by id
+      responses:
+        204:
+          description: The settings has been deleted
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:

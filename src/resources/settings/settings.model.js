@@ -8,9 +8,9 @@ const checkLimit = obj =>
   obj.length <= MAX_OPTIONAL_PROPERTIES &&
   JSON.stringify(obj).length <= MAX_SYMBOLS_PER_OBJECT;
 
-const StatisticSchema = new Schema(
+const SettingsSchema = new Schema(
   {
-    learnedWords: {
+    wordsPerDay: {
       type: Number
     },
     optional: {
@@ -22,7 +22,7 @@ const StatisticSchema = new Schema(
       ]
     }
   },
-  { collection: 'statistics' }
+  { collection: 'settings' }
 );
 
-module.exports = mongoose.model('Statistic', StatisticSchema);
+module.exports = mongoose.model('Settings', SettingsSchema);

@@ -4,6 +4,7 @@ const path = require('path');
 const YAML = require('yamljs');
 const wordsRouter = require('./resources/words/word.router');
 const statisticsRouter = require('./resources/statistics/statistics.router');
+const settingsRouter = require('./resources/settings/settings.router');
 const errorHandler = require('./errors/errorHandler');
 
 const app = express();
@@ -38,6 +39,8 @@ app.use('/', (req, res, next) => {
 app.use('/words', wordsRouter);
 
 app.use('/statistics', statisticsRouter);
+
+app.use('/statistics', settingsRouter);
 
 app.use(errorHandler);
 
