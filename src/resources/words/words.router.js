@@ -13,7 +13,9 @@ router.route('/').get(
         : PER_PAGE;
 
     if (isNaN(page) || isNaN(perPage)) {
-      throw new BadRequest('Wrong query parameters, should be a valid integer');
+      throw new BadRequest(
+        'Wrong query parameters, the page and per page numbers should be valid integers'
+      );
     }
 
     WordsModel.find()
