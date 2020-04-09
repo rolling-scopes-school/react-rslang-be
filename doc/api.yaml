@@ -239,7 +239,7 @@ paths:
   /settings:
     get:
       tags:
-        - Statistics
+        - Settings
       summary: Get all settings
       description: Gets all settings
       responses:
