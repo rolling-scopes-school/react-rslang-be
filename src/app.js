@@ -2,10 +2,7 @@ const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
-const userRouter = require('./resources/users/user.router');
 const wordsRouter = require('./resources/words/words.router');
-const boardRouter = require('./resources/boards/board.router');
-const taskRouter = require('./resources/tasks/task.router');
 const errorHandler = require('./errors/errorHandler');
 
 const app = express();
@@ -23,11 +20,19 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.use('/users', userRouter);
-
-app.use('/boards', boardRouter);
-
-boardRouter.use('/:boardId/tasks', taskRouter);
+app.use('/', (req, res, next) => {
+  if (req.originalUrl === '/') {
+    res.send('Service is running!');
+    return;
+  }
+  console.log(`\n###### STARTED REQUEST ${req.method} ${req.originalUrl}\n`);
+  res.on('finish', () => {
+    console.log(
+      `\n========= FINISHED REQUEST ${req.method} ${req.originalUrl} ${res.statusCode}\n`
+    );
+  });
+  next();
+});
 
 app.use('/words', wordsRouter);
 
