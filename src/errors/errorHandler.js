@@ -1,4 +1,4 @@
-const notFoundError = require('./appError');
+const notFoundError = require('./appErrors');
 
 const handle = (err, req, res, next) => {
   console.error(err);
