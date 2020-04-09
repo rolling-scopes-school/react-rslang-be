@@ -40,7 +40,7 @@ app.use('/words', wordsRouter);
 
 app.use('/statistics', statisticsRouter);
 
-app.use('/statistics', settingsRouter);
+app.use('/settings', settingsRouter);
 
 app.use(errorHandler);
 

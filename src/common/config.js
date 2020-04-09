@@ -12,5 +12,7 @@ module.exports = {
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
   AUTH_MODE: process.env.AUTH_MODE === 'true',
   MAX_PER_PAGE: 100,
-  PER_PAGE: 10
+  PER_PAGE: 10,
+  MAX_SYMBOLS_PER_OBJECT: 1000,
+  MAX_OPTIONAL_PROPERTIES: 30
 };

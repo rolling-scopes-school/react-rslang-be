@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-const MAX_SYMBOLS_PER_OBJECT = 1000;
-const MAX_OPTIONAL_PROPERTIES = 30;
-
-const checkLimit = obj =>
-  obj.length <= MAX_OPTIONAL_PROPERTIES &&
-  JSON.stringify(obj).length <= MAX_SYMBOLS_PER_OBJECT;
+const {
+  MAX_OPTIONAL_PROPERTIES,
+  MAX_SYMBOLS_PER_OBJECT
+} = require('../../common/config');
+const checkLimit = require('../../utils/checkLimits');
 
 const SettingsSchema = new Schema(
   {

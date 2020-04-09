@@ -33,6 +33,19 @@ components:
       properties:
         count:
           type: number
+    UserWord:
+      type: object
+      properties:
+        wordId:
+          type: string
+        userId:
+          type: string
+        difficulty:
+          type: string
+        optional:
+          type: array
+          items:
+            type: any
     Statistics:
       type: object
       properties:
@@ -89,7 +102,7 @@ paths:
           type: string
     get:
       tags:
-        - words
+        - Words
       summary: Get a chunk words
       description: Gets a chink of words
       responses:
@@ -106,7 +119,7 @@ paths:
   /words/count:
     get:
       tags:
-        - words
+        - Words
       summary: Get a total number of words
       description: Get a total number of words
       responses:
@@ -120,6 +133,110 @@ paths:
                   $ref: "#/components/schemas/WordCount"
         401:
           $ref: '#/components/responses/UnauthorizedError'
+  /words/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Words
+      summary: Get a user word by id and user id
+      description: Gets a user word by id and user id
+        e.g. “/words/123”
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWord"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: UserWord not found
+    post:
+      tags:
+        - Words
+      summary: Create a user word
+      description: Create a user word by id and user id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                wordId:
+                  type: string
+                userId:
+                  type: string
+                difficulty:
+                  type: string
+                optional:
+                  type: array
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The user word has been created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWord"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    put:
+      tags:
+        - Words
+      summary: Update a user word
+      description: Updates a user word by id and user id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                wordId:
+                  type: string
+                userId:
+                  type: string
+                difficulty:
+                  type: string
+                optional:
+                  type: array
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The user word has been updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWord"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - Words
+      summary: Delete user word
+      description: Deletes user words by id and user id
+      responses:
+        204:
+          description: The user word has been deleted
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: UserWord not found
   /statistics:
     get:
       tags:
@@ -191,7 +308,7 @@ paths:
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
-          description: Statistic not found
+          description: Statistics not found
     put:
       tags:
         - Statistics
@@ -234,7 +351,7 @@ paths:
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
-          description: Statistic not found
+          description: Statistics not found
 
   /settings:
     get:
@@ -307,7 +424,7 @@ paths:
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
-          description: Statistic not found
+          description: Statistics not found
     put:
       tags:
         - Settings
@@ -350,7 +467,7 @@ paths:
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
-          description: Statistic not found
+          description: Statistics not found
 
 #  /login:
 #    post:

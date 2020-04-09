@@ -6,11 +6,11 @@ const {
 } = require('../../common/config');
 const checkLimit = require('../../utils/checkLimits');
 
-const StatisticSchema = new Schema(
+const UserWordsSchema = new Schema(
   {
-    learnedWords: {
-      type: Number
-    },
+    wordId: { type: String, required: true },
+    userId: { type: String, required: true },
+    difficulty: { type: String, required: false },
     optional: {
       type: Array,
       required: false,
@@ -20,7 +20,7 @@ const StatisticSchema = new Schema(
       ]
     }
   },
-  { collection: 'statistics' }
+  { collection: 'userWords' }
 );
 
-module.exports = mongoose.model('Statistic', StatisticSchema);
+module.exports = mongoose.model('UserWords', UserWordsSchema);
