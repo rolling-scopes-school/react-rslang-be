@@ -1,14 +1,14 @@
 const router = require('express').Router();
-const WordsModel = require('./words.model');
+const WordsModel = require('./word.model');
 const wrapAsync = require('../../utils/wrapAsync');
-const { PER_PAGE } = require('../../common/config');
+const { MAX_PER_PAGE, PER_PAGE } = require('../../common/config');
 const { BadRequest } = require('../../errors/appErrors');
 
 router.route('/').get(
   wrapAsync(async (req, res) => {
     const page = req.query.page ? +req.query.page : 0;
     const perPage =
-      req.query.perPage && req.query.perPage <= PER_PAGE
+      req.query.perPage && req.query.perPage <= MAX_PER_PAGE
         ? +req.query.perPage
         : PER_PAGE;
 

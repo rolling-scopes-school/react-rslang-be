@@ -33,6 +33,15 @@ components:
       properties:
         count:
           type: number
+    Statistic:
+      type: object
+      properties:
+        learnedWords:
+          type: number
+        optional:
+          type: array
+          items:
+            type: any
 #    User:
 #      type: object
 #      properties:
@@ -60,11 +69,13 @@ paths:
       - name: page
         in: query
         required: false
+        description: Number of words / perPage = Total pages
         schema:
           type: string
       - name: perPage
         in: query
         required: false
+        description: max number is 100
         schema:
           type: string
     get:
@@ -100,131 +111,122 @@ paths:
                   $ref: "#/components/schemas/WordCount"
         401:
           $ref: '#/components/responses/UnauthorizedError'
-#  /users:
-#    get:
-#      tags:
-#        - Users
-#      summary: Get all users
-#      description: Gets all users (remove password from response)
-#      responses:
-#        200:
-#          description: Successful operation
-#          content:
-#            application/json:
-#              schema:
-#                type: array
-#                items:
-#                  $ref: "#/components/schemas/User"
-#        401:
-#          $ref: '#/components/responses/UnauthorizedError'
-#    post:
-#      tags:
-#        - Users
-#      summary: Create user
-#      description: Creates a new user (remove password from response)
-#      requestBody:
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              type: object
-#              title: example
-#              properties:
-#                name:
-#                  type: string
-#                  description: The user's name
-#                login:
-#                  type: string
-#                  description: The user's login
-#                password:
-#                  type: string
-#                  description: The user's password
-#              required:
-#                - name
-#      responses:
-#        200:
-#          description: The user has been created.
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/User"
-#        400:
-#          description: Bad request
-#        401:
-#          $ref: '#/components/responses/UnauthorizedError'
-#  /users/{userId}:
-#    parameters:
-#      - name: userId
-#        in: path
-#        required: true
-#        schema:
-#          type: string
-#    get:
-#      tags:
-#        - Users
-#      summary: Get user by ID
-#      description: Gets a user by ID
-#        e.g. “/users/123” (remove password from response)
-#      responses:
-#        200:
-#          description: Successful operation
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/User"
-#        401:
-#          $ref: '#/components/responses/UnauthorizedError'
-#        404:
-#          description: User not found
-#    put:
-#      tags:
-#        - Users
-#      summary: Update a user
-#      description: Updates a user by ID
-#      requestBody:
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              type: object
-#              title: example
-#              properties:
-#                name:
-#                  type: string
-#                  description: The user's name
-#                login:
-#                  type: string
-#                  description: The user's login
-#                password:
-#                  type: string
-#                  description: The user's password
-#              required:
-#                - name
-#      responses:
-#        200:
-#          description: The user has been updated.
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/User"
-#        400:
-#          description: Bad request
-#        401:
-#          $ref: '#/components/responses/UnauthorizedError'
-#    delete:
-#      tags:
-#        - Users
-#      summary: Delete user
-#      description: Deletes user by ID. When somebody
-#        DELETE User, all Tasks where User is assignee
-#        should be updated to put userId=null
-#      responses:
-#        204:
-#          description: The user has been deleted
-#        401:
-#          $ref: '#/components/responses/UnauthorizedError'
-#        404:
-#          description: User not found
+  /statistics:
+    get:
+      tags:
+        - Statistics
+      summary: Get all statistics
+      description: Gets all statistics
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Statistic"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      tags:
+        - Statistics
+      summary: Create statistic
+      description: Creates a new statistic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                learnedWords:
+                  type: number
+                  description: The number of the total learned words
+                optional:
+                  type: array
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The statistic has been created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Statistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /statistics/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Statistics
+      summary: Get statistic by id
+      description: Gets a statistic by id
+        e.g. “/statistics/123”
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Statistic"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Statistic not found
+    put:
+      tags:
+        - Statistics
+      summary: Update a statistic
+      description: Updates a statistic by id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                learnedWords:
+                  type: number
+                  description: The number of the total learned words
+                optional:
+                  type: array
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The statistic has been updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Statistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - Statistics
+      summary: Delete statistic
+      description: Deletes statistic by id
+      responses:
+        204:
+          description: The statistic has been deleted
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Statistic not found
+
 #  /login:
 #    post:
 #      tags:

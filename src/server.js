@@ -4,7 +4,8 @@ const app = require('./app');
 
 mongoose.connect(MONGO_CONNECTION_STRING, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
