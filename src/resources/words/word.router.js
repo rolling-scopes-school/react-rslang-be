@@ -64,6 +64,27 @@ router.route('/:id').get(
   })
 );
 
+router.route('/:id').post(
+  wrapAsync(async (req, res) => {
+    const userId = req.query.userId;
+    const wordId = req.params.id;
+
+    if (!userId) {
+      throw new BadRequest('A user id should be specified');
+    }
+
+    await new UserWordsModel({ ...req.body, wordId, userId }).save(
+      (err, docs) => {
+        if (err) {
+          throw err;
+        } else {
+          res.status(200).send(docs);
+        }
+      }
+    );
+  })
+);
+
 router.route('/:id').put(
   wrapAsync(async (req, res) => {
     const userId = req.query.userId;
