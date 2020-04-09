@@ -33,7 +33,7 @@ components:
       properties:
         count:
           type: number
-    Statistic:
+    Statistics:
       type: object
       properties:
         learnedWords:
@@ -125,7 +125,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Statistic"
+                  $ref: "#/components/schemas/Statistics"
         401:
           $ref: '#/components/responses/UnauthorizedError'
     post:
@@ -154,7 +154,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Statistic"
+                $ref: "#/components/schemas/Statistics"
         400:
           description: Bad request
         401:
@@ -178,7 +178,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Statistic"
+                $ref: "#/components/schemas/Statistics"
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
@@ -209,7 +209,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Statistic"
+                $ref: "#/components/schemas/Statistics"
         400:
           description: Bad request
         401:

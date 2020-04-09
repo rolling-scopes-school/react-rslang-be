@@ -3,7 +3,7 @@ const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
 const wordsRouter = require('./resources/words/word.router');
-const statisticsRouter = require('./resources/statistics/statistic.router');
+const statisticsRouter = require('./resources/statistics/statistics.router');
 const errorHandler = require('./errors/errorHandler');
 
 const app = express();
