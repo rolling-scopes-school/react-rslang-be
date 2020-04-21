@@ -1,41 +1,40 @@
 const router = require('express').Router();
-const WordsModel = require('./word.model');
+const { Words, toResponse } = require('./word.model');
 const UserWordsModel = require('./userWord.model');
 const wrapAsync = require('../../utils/wrapAsync');
-const { MAX_PER_PAGE, PER_PAGE } = require('../../common/config');
 const { BadRequest } = require('../../errors/appErrors');
 
 router.route('/').get(
   wrapAsync(async (req, res) => {
     const page = req.query.page ? +req.query.page : 0;
-    const perPage =
-      req.query.perPage && req.query.perPage <= MAX_PER_PAGE
-        ? +req.query.perPage
-        : PER_PAGE;
+    const group = req.query.group ? +req.query.group : 0;
 
-    if (isNaN(page) || isNaN(perPage)) {
+    if (isNaN(page) || isNaN(group)) {
       throw new BadRequest(
         'Wrong query parameters, the page and per page numbers should be valid integers'
       );
+    } else if (req.query.perPage) {
+      throw new BadRequest(
+        `The API has been changed. 
+        There is no perPage parameter anymore.
+        Use group and page parameters instead. 
+        Please read Discord chat for details.`
+      );
     }
 
-    WordsModel.find()
-      .sort({ word: 1 })
-      .skip(page * perPage)
-      .limit(perPage)
-      .exec({}, (err, docs) => {
-        if (!err) {
-          res.status(200).send(docs);
-        } else {
-          throw err;
-        }
-      });
+    Words.find({ group, page }).exec({}, (err, docs) => {
+      if (err) {
+        throw err;
+      }
+
+      res.status(200).send(docs.map(toResponse));
+    });
   })
 );
 
 router.route('/count').get(
   wrapAsync(async (req, res) => {
-    WordsModel.countDocuments({}, (err, count) => {
+    Words.countDocuments({}, (err, count) => {
       if (!err) {
         res.status(200).send({ count });
       } else {

@@ -88,16 +88,16 @@ security:
 paths:
   /words:
     parameters:
+      - name: group
+        in: query
+        required: false
+        description: group number
+        schema:
+          type: string
       - name: page
         in: query
         required: false
-        description: Number of words / perPage = Total pages
-        schema:
-          type: string
-      - name: perPage
-        in: query
-        required: false
-        description: max number is 100
+        description: page in the group
         schema:
           type: string
     get:

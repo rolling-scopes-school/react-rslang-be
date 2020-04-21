@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const WordsSchema = new Schema(
   {
+    group: { type: Number, required: true },
+    page: { type: Number, required: true },
     word: { type: String, required: true, max: 100 },
     image: { type: String, required: false, max: 150 },
     audio: { type: String, required: false, max: 150 },
@@ -15,4 +17,28 @@ const WordsSchema = new Schema(
   { collection: 'words' }
 );
 
-module.exports = mongoose.model('Words', WordsSchema);
+const toResponse = w => {
+  const {
+    word,
+    image,
+    audio,
+    audioMeaning,
+    audioExample,
+    textMeaning,
+    textExample,
+    transcription
+  } = w;
+  return {
+    word,
+    image,
+    audio,
+    audioMeaning,
+    audioExample,
+    textMeaning,
+    textExample,
+    transcription
+  };
+};
+
+const Words = mongoose.model('Words', WordsSchema);
+module.exports = { Words, toResponse };
