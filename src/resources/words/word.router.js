@@ -20,8 +20,9 @@ router.route('/').get(
     }
 
     WordsModel.find()
-      .limit(perPage)
+      .sort({ word: 1 })
       .skip(page * perPage)
+      .limit(perPage)
       .exec({}, (err, docs) => {
         if (!err) {
           res.status(200).send(docs);
