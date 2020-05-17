@@ -1,19 +1,17 @@
 {
-  "name": "rs-rest-service-starter",
+  "name": "learn-words-rs-rest-service",
   "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": ""
   },
   "type": "commonjs",
-  "description": "REST service starter for RS School",
+  "description": "LearnWords REST service for RS School",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "start:dev": "nodemon src/server.js",
     "lint": "eslint ./ --ignore-path .gitignore --fix",
-    "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace",
-    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
     "heroku-postbuild": "npm install --only=dev"
   },
   "keywords": [
@@ -22,18 +20,11 @@
     "rest",
     "node",
     "express",
-    "autotest",
-    "starter"
+    "LearnWords"
   ],
   "license": "ISC",
   "engines": {
     "node": "12.16.x"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./test/setup.js"
-    ]
   },
   "husky": {
     "hooks": {

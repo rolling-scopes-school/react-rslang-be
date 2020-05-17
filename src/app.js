@@ -26,20 +26,6 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.use('/', (req, res, next) => {
-  if (req.originalUrl === '/') {
-    res.send('Service is running!');
-    return;
-  }
-  console.log(`\n###### STARTED REQUEST ${req.method} ${req.originalUrl}\n`);
-  res.on('finish', () => {
-    console.log(
-      `\n========= FINISHED REQUEST ${req.method} ${req.originalUrl} ${res.statusCode}\n`
-    );
-  });
-  next();
-});
-
 app.use('/words', wordsRouter);
 
 app.use('/statistics', statisticsRouter);
