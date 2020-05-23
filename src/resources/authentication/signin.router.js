@@ -6,15 +6,15 @@ const { JWT_SECRET_KEY, JWT_EXPIRE_TIME } = require('../../common/config');
 const userService = require('../users/user.service');
 
 router.route('/').post(async (req, res) => {
-  const userId = await userService.authenticate(req.body);
+  const user = await userService.authenticate(req.body);
 
-  const token = jwt.sign(userId, JWT_SECRET_KEY, {
+  const token = jwt.sign(user, JWT_SECRET_KEY, {
     expiresIn: JWT_EXPIRE_TIME
   });
   res.status(OK).json({
     message: 'Authenticated',
     token,
-    userId
+    userId: user.id
   });
 });
 
