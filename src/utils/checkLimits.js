@@ -4,7 +4,7 @@ const {
 } = require('../common/config');
 
 const checkLimit = obj =>
-  obj.length <= MAX_OPTIONAL_PROPERTIES &&
+  Object.keys(obj).length <= MAX_OPTIONAL_PROPERTIES &&
   JSON.stringify(obj).length <= MAX_SYMBOLS_PER_OBJECT;
 
 module.exports = checkLimit;

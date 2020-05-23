@@ -5,8 +5,7 @@ const { AUTHORIZATION_ERROR } = require('../../errors/appErrors');
 const ALLOWED_PATHS = ['/signin', '/signup'];
 const DOC_PATH_REGEX = /^\/doc\/?$/;
 const DOC_PATH_RESOURCES_REGEX = /^\/doc\/.+$/;
-const WORDS_PATH_REGEX = /^\/words$/;
-const WORDS_COUNT_PATH_REGEX = /^\/words\/count$/;
+const WORDS_PATH_REGEX = /^\/words\/[0-9a-z]+$/;
 const USERS_PATH = '/users';
 
 function isOpenPath(path) {
@@ -14,8 +13,7 @@ function isOpenPath(path) {
     ALLOWED_PATHS.includes(path) ||
     DOC_PATH_REGEX.test(path) ||
     DOC_PATH_RESOURCES_REGEX.test(path) ||
-    WORDS_PATH_REGEX.test(path) ||
-    WORDS_COUNT_PATH_REGEX.test(path)
+    WORDS_PATH_REGEX.test(path)
   );
 }
 
@@ -35,7 +33,8 @@ const checkAuthentication = (req, res, next) => {
 
   try {
     const token = rawToken.slice(7, rawToken.length);
-    req.userId = jwt.verify(token, JWT_SECRET_KEY).id;
+    const { id } = jwt.verify(token, JWT_SECRET_KEY);
+    req.userId = id;
   } catch (error) {
     throw new AUTHORIZATION_ERROR();
   }

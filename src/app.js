@@ -7,6 +7,7 @@ const YAML = require('yamljs');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+require('express-async-errors');
 const { NOT_FOUND } = require('http-status-codes');
 
 const winston = require('./common/logging');
@@ -56,9 +57,9 @@ app.use('/users', userRouter);
 
 userRouter.use('/:id/words', userIdValidator, userWordsRouter);
 
-userRouter.use('/:id/statistic', userIdValidator, statisticRouter);
+userRouter.use('/:id/statistics', userIdValidator, statisticRouter);
 
-userRouter.use('/:id/setting', userIdValidator, settingRouter);
+userRouter.use('/:id/settings', userIdValidator, settingRouter);
 
 app.use((req, res, next) => next(createError(NOT_FOUND)));
 

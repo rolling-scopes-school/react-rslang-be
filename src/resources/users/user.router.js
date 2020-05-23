@@ -22,9 +22,15 @@ router.get(
   }
 );
 
-router.put('/:id', userIdValidator, async (req, res) => {
-  const userEntity = await userService.update(req.userId, req.body);
-  res.status(OK).send(userEntity.toResponse());
-});
+router.put(
+  '/:id',
+  userIdValidator,
+  validator(id, 'params'),
+  validator(user, 'body'),
+  async (req, res) => {
+    const userEntity = await userService.update(req.userId, req.body);
+    res.status(OK).send(userEntity.toResponse());
+  }
+);
 
 module.exports = router;

@@ -69,6 +69,15 @@ components:
           type: string
         password:
           type: string
+    Auth:
+      type: object
+      properties:
+        message:
+          type: string
+        token:
+          type: string
+        userId:
+          type: string
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid
@@ -101,7 +110,7 @@ paths:
         - Words
       security:
         []
-      summary: Get a chunk words
+      summary: Get a chunk of words
       description: Gets a chink of words
       responses:
         200:
@@ -126,9 +135,29 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: "#/components/schemas/WordCount"
+                $ref: "#/components/schemas/WordCount"
+  /words/{id}:
+    parameters:
+      - name: id
+        description: wordId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Words
+      security:
+        []
+      summary: Get a word by id
+      description: Gets a word by id
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Word"
   /users:
     post:
       tags:
@@ -157,8 +186,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
                   $ref: "#/components/schemas/User"
         422:
           description: Incorrect e-mail or password
@@ -181,8 +208,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: "#/components/schemas/User"
         401:
           $ref: '#/components/responses/UnauthorizedError'
@@ -218,6 +243,60 @@ paths:
           description: Bad request
         401:
           $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/words:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Words
+      summary: Get all user words
+      description: Gets all user words
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserWord"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      tags:
+        - Users/Words
+      summary: Create a user word
+      description: Create a user word by id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                difficulty:
+                  type: string
+                optional:
+                  type: array
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The user word has been created.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/UserWord"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/words/{wordId}:
     parameters:
       - name: id
@@ -248,36 +327,6 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         404:
           description: User's word not found
-    post:
-      tags:
-        - Users/Words
-      summary: Create a user word
-      description: Create a user word by id
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              title: example
-              properties:
-                difficulty:
-                  type: string
-                optional:
-                  type: array
-                  items:
-                    type: any
-      responses:
-        200:
-          description: The user word has been created.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserWord"
-        400:
-          description: Bad request
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
     put:
       tags:
         - Users/Words
@@ -303,7 +352,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserWord"
+                  $ref: "#/components/schemas/UserWord"
         400:
           description: Bad request
         401:
@@ -337,8 +386,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: "#/components/schemas/Statistic"
         401:
           $ref: '#/components/responses/UnauthorizedError'
@@ -370,7 +417,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Statistic"
+                  $ref: "#/components/schemas/Statistic"
         400:
           description: Bad request
         401:
@@ -394,8 +441,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: "#/components/schemas/Setting"
         401:
           $ref: '#/components/responses/UnauthorizedError'
@@ -427,7 +472,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Setting"
+                  $ref: "#/components/schemas/Setting"
         400:
           description: Bad request
         401:
@@ -460,7 +505,6 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                description: JWT Token
+                $ref: "#/components/schemas/Auth"
         403:
           description: Incorrect e-mail or password
