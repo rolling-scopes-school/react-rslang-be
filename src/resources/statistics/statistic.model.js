@@ -4,11 +4,16 @@ const {
   MAX_OPTIONAL_PROPERTIES,
   MAX_SYMBOLS_PER_OBJECT
 } = require('../../common/config');
+const { addMethods } = require('../../utils/toResponse');
 const checkLimit = require('../../utils/checkLimits');
 
-const SettingsSchema = new Schema(
+const StatisticSchema = new Schema(
   {
-    wordsPerDay: {
+    userId: {
+      type: String,
+      required: true
+    },
+    learnedWords: {
       type: Number
     },
     optional: {
@@ -20,7 +25,9 @@ const SettingsSchema = new Schema(
       ]
     }
   },
-  { collection: 'settings' }
+  { collection: 'statistic' }
 );
 
-module.exports = mongoose.model('Settings', SettingsSchema);
+addMethods(StatisticSchema);
+
+module.exports = mongoose.model('Statistic', StatisticSchema);

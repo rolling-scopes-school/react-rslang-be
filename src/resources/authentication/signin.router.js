@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { OK } = require('http-status-codes');
 
 const { JWT_SECRET_KEY, JWT_EXPIRE_TIME } = require('../../common/config');
-const userService = require('./user.service');
+const userService = require('../users/user.service');
 
 router.route('/').post(async (req, res) => {
   const validatedUser = await userService.authenticate(req.body);

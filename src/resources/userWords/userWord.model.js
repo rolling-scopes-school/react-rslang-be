@@ -4,6 +4,7 @@ const {
   MAX_OPTIONAL_PROPERTIES,
   MAX_SYMBOLS_PER_OBJECT
 } = require('../../common/config');
+const { addMethods } = require('../../utils/toResponse');
 const checkLimit = require('../../utils/checkLimits');
 
 const UserWordsSchema = new Schema(
@@ -22,5 +23,9 @@ const UserWordsSchema = new Schema(
   },
   { collection: 'userWords' }
 );
+
+UserWordsSchema.index({ wordId: 1, userId: 1 }, { unique: true });
+
+addMethods(UserWordsSchema);
 
 module.exports = mongoose.model('UserWords', UserWordsSchema);

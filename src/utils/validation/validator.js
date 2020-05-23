@@ -1,4 +1,8 @@
-const { BAD_REQUEST, UNPROCESSABLE_ENTITY } = require('http-status-codes');
+const {
+  BAD_REQUEST,
+  UNPROCESSABLE_ENTITY,
+  FORBIDDEN
+} = require('http-status-codes');
 
 const errorResponse = errors => {
   return {
@@ -23,4 +27,12 @@ const validator = (schema, property) => {
   };
 };
 
-module.exports = validator;
+const userIdValidator = (req, res, next) => {
+  if (req.userId !== req.params.id) {
+    res.sendStatus(FORBIDDEN);
+  }
+
+  return next();
+};
+
+module.exports = { validator, userIdValidator };

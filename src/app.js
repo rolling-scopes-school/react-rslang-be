@@ -10,13 +10,15 @@ const helmet = require('helmet');
 const { NOT_FOUND } = require('http-status-codes');
 
 const winston = require('./common/logging');
-const wordsRouter = require('./resources/words/word.router');
-const statisticsRouter = require('./resources/statistics/statistics.router');
-const settingsRouter = require('./resources/settings/settings.router');
+const wordRouter = require('./resources/words/word.router');
+const signinRouter = require('./resources/authentication/signin.router');
+const userRouter = require('./resources/users/user.router');
+const userWordsRouter = require('./resources/userWords/userWord.router');
+const statisticRouter = require('./resources/statistics/statistic.router');
+const settingRouter = require('./resources/settings/setting.router');
 const errorHandler = require('./errors/errorHandler');
-const checkAuth = require('./common/checkAuth');
-const signinRouter = require('./resources/users/signin.router');
-const signupRouter = require('./resources/users/signup.router');
+const checkAuthentication = require('./resources/authentication/checkAuthentication');
+const { userIdValidator } = require('./utils/validation/validator');
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -25,7 +27,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use(checkAuth);
+app.use(checkAuthentication);
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
@@ -46,15 +48,17 @@ app.use(
   )
 );
 
+app.use('/words', wordRouter);
+
 app.use('/signin', signinRouter);
 
-app.use('/signup', signupRouter);
+app.use('/users', userRouter);
 
-app.use('/words', wordsRouter);
+userRouter.use('/:id/words', userIdValidator, userWordsRouter);
 
-app.use('/statistics', statisticsRouter);
+userRouter.use('/:id/statistic', userIdValidator, statisticRouter);
 
-app.use('/settings', settingsRouter);
+userRouter.use('/:id/setting', userIdValidator, settingRouter);
 
 app.use((req, res, next) => next(createError(NOT_FOUND)));
 

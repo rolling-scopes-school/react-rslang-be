@@ -1,5 +1,5 @@
 const User = require('./user.model');
-const { NOT_FOUND_ERROR, USER_EXISTS } = require('../../errors/appErrors');
+const { NOT_FOUND_ERROR, ENTITY_EXISTS } = require('../../errors/appErrors');
 const ENTITY_NAME = 'user';
 
 const getUserByEmail = async email => {
@@ -25,12 +25,12 @@ const save = async user => {
     return await User.create(user);
   } catch (err) {
     if (err.code === 11000) {
-      throw new USER_EXISTS(null, null, 'User with this email exists');
+      throw new ENTITY_EXISTS(`${ENTITY_NAME} with this e-mail exists`);
     }
   }
 };
 
 const update = async (id, user) =>
-  User.findOneAndUpdate({ _id: id }, { $set: user }, { new: true });
+  User.findOneAndUpdate({ _id: id }, { $set: user });
 
 module.exports = { get, getUserByEmail, save, update };

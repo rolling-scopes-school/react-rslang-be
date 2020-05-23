@@ -3,6 +3,7 @@ const {
   EXPECTATION_FAILED,
   UNAUTHORIZED,
   FORBIDDEN,
+  BAD_REQUEST,
   getStatusText
 } = require('http-status-codes');
 
@@ -21,29 +22,29 @@ class NotFoundError extends AppError {
   }
 }
 
-class AnalyseError extends AppError {
-  constructor(entity, params, message) {
+class BadRequestError extends AppError {
+  constructor(message) {
     super(message);
-    this.status = EXPECTATION_FAILED;
+    this.status = BAD_REQUEST;
   }
 }
 
-class UserExistsError extends AppError {
-  constructor(entity, params, message) {
+class EntityExistsError extends AppError {
+  constructor(message) {
     super(message);
     this.status = EXPECTATION_FAILED;
   }
 }
 
 class AuthorizationError extends AppError {
-  constructor(entity, params, message) {
+  constructor(message) {
     super(message || getStatusText(UNAUTHORIZED));
     this.status = UNAUTHORIZED;
   }
 }
 
 class AuthenticationError extends AppError {
-  constructor(entity, params, message) {
+  constructor(message) {
     super(message || getStatusText(FORBIDDEN));
     this.status = FORBIDDEN;
   }
@@ -51,8 +52,8 @@ class AuthenticationError extends AppError {
 
 module.exports = {
   NOT_FOUND_ERROR: NotFoundError,
-  ANALYSE_ERROR: AnalyseError,
+  BAD_REQUEST_ERROR: BadRequestError,
   AUTHORIZATION_ERROR: AuthorizationError,
   AUTHENTICATION_ERROR: AuthenticationError,
-  USER_EXISTS: UserExistsError
+  ENTITY_EXISTS: EntityExistsError
 };

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { addMethods } = require('../../utils/toResponse');
 
 const WordsSchema = new Schema(
   {
@@ -17,28 +18,6 @@ const WordsSchema = new Schema(
   { collection: 'words' }
 );
 
-const toResponse = w => {
-  const {
-    word,
-    image,
-    audio,
-    audioMeaning,
-    audioExample,
-    textMeaning,
-    textExample,
-    transcription
-  } = w;
-  return {
-    word,
-    image,
-    audio,
-    audioMeaning,
-    audioExample,
-    textMeaning,
-    textExample,
-    transcription
-  };
-};
+addMethods(WordsSchema);
 
-const Words = mongoose.model('Words', WordsSchema);
-module.exports = { Words, toResponse };
+module.exports = mongoose.model('Words', WordsSchema);

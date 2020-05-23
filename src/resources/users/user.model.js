@@ -25,10 +25,6 @@ User.pre('save', async function preSave(next) {
   next();
 });
 
-User.statics.validatePass = async (passwordA, passwordB) => {
-  return await bcrypt.compare(passwordA, passwordB);
-};
-
 addMethods(User);
 
 module.exports = mongoose.model('users', User);

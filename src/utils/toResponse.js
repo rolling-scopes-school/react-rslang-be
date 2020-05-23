@@ -5,11 +5,8 @@ const addMethods = schema => {
     const { _id, ...rest } = this.toJSON();
     delete rest.password;
     delete rest.__v;
+    delete rest.userId;
     return { id: _id, ...rest };
-  });
-  // eslint-disable-next-line func-names
-  schema.method('fromRequest', function () {
-    console.log(this);
   });
 };
 

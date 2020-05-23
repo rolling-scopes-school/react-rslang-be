@@ -1,6 +1,9 @@
-const { LOGS_DIR } = require('./config');
 const winston = require('winston');
+const morgan = require('morgan');
 const { combine, timestamp, prettyPrint, colorize, cli } = winston.format;
+const { LOGS_DIR } = require('./config');
+
+morgan.token('userId', req => JSON.stringify(req.userId));
 
 const format = combine(timestamp(), prettyPrint());
 const options = {

@@ -1,11 +1,14 @@
-const { NotFoundError, BadRequest } = require('./appErrors');
+const { INTERNAL_SERVER_ERROR, getStatusText } = require('http-status-codes');
+const logger = require('../common/logging');
 
 const handle = (err, req, res, next) => {
-  console.error(err);
-  if (err instanceof NotFoundError || err instanceof BadRequest) {
+  if (err.status) {
     res.status(err.status).send(err.message);
-  } else if (err) {
-    res.sendStatus(500);
+  } else {
+    logger.error(err.stack);
+    res
+      .status(INTERNAL_SERVER_ERROR)
+      .send(getStatusText(INTERNAL_SERVER_ERROR));
   }
   next();
 };
