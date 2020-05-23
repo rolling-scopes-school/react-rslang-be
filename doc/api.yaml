@@ -41,7 +41,7 @@ components:
         difficulty:
           type: string
         optional:
-          type: array
+          type: object
           items:
             type: any
     Statistic:
@@ -50,7 +50,7 @@ components:
         learnedWords:
           type: number
         optional:
-          type: array
+          type: object
           items:
             type: any
     Setting:
@@ -59,7 +59,7 @@ components:
         wordsPerDay:
           type: number
         optional:
-          type: array
+          type: object
           items:
             type: any
     User:
@@ -283,7 +283,7 @@ paths:
                 difficulty:
                   type: string
                 optional:
-                  type: array
+                  type: object
                   items:
                     type: any
       responses:
@@ -343,7 +343,7 @@ paths:
                 difficulty:
                   type: string
                 optional:
-                  type: array
+                  type: object
                   items:
                     type: any
       responses:
@@ -408,7 +408,7 @@ paths:
                   type: number
                   description: The number of the total learned words
                 optional:
-                  type: array
+                  type: object
                   items:
                     type: any
       responses:
@@ -463,7 +463,7 @@ paths:
                   type: number
                   description: The max number of learned words per day
                 optional:
-                  type: array
+                  type: object
                   items:
                     type: any
       responses:
