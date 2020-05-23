@@ -15,7 +15,7 @@ const get = async (wordId, userId) => {
 
 const save = async (wordId, userId, userWord) => {
   try {
-    return UserWord.create(userWord);
+    return await UserWord.create(userWord);
   } catch (err) {
     if (err.code === 11000) {
       throw new ENTITY_EXISTS(`such ${ENTITY_NAME} already exists`);
