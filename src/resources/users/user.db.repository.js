@@ -26,6 +26,8 @@ const save = async user => {
   } catch (err) {
     if (err.code === 11000) {
       throw new ENTITY_EXISTS(`${ENTITY_NAME} with this e-mail exists`);
+    } else {
+      throw err;
     }
   }
 };
