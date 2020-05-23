@@ -34,7 +34,10 @@ const createUser = async user => {
 
 createUser({ "email": "hello@user.com", "password": "Gfhjkm_123" });
 -------------------------------------------------------------------
-Console: {id: "5ec993df4ca9d600178740ae", email: "hello@user.com"}
+Console: {
+  id: "5ec993df4ca9d600178740ae", 
+  email: "hello@user.com"
+}
 ```  
 ###Sign In  
 Чтобы пользоваться эндпоинтами требующими авторизации необходимо залогиниться в систему и получить JWT токен. Для этого существует POST эндоинт по адресу `/signin`. Токены имеют ограниченный срок жизни, в текущей реализации это 4 часа с момента получения. Пример запроса:  
@@ -88,7 +91,15 @@ createUserWord({
   word: { "difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true} }
 });
 -------------------------------------------------------------------
-Console: {"id":"5ec9a92acbbd77001736b167","difficulty":"weak","optional":{"testFieldString":"test","testFieldBoolean":true},"wordId":"5e9f5ee35eb9e72bc21af716"}
+Console: {
+  "id":"5ec9a92acbbd77001736b167",
+  "difficulty":"weak",
+  "optional":{
+    "testFieldString":"test",
+    "testFieldBoolean":true
+  },
+  "wordId":"5e9f5ee35eb9e72bc21af716"
+}
 
 const getUserWord = async ({ userId, wordId }) => {
   const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
@@ -109,7 +120,15 @@ getUserWord({
   wordId: "5e9f5ee35eb9e72bc21af716"
 });
 -------------------------------------------------------------------
-Console: {"id":"5ec9a92acbbd77001736b167","difficulty":"weak","optional":{"testFieldString":"test","testFieldBoolean":true},"wordId":"5e9f5ee35eb9e72bc21af716"}
+Console: {
+  "id":"5ec9a92acbbd77001736b167",
+  "difficulty":"weak",
+  "optional":{
+    "testFieldString":"test",
+    "testFieldBoolean":true
+  },
+  "wordId":"5e9f5ee35eb9e72bc21af716"
+}
 ```
 Также существуют эндпоинты для сохранения статистики и настроек пользователя. `\users\{id}\statistics` и `\users\{id}\settings` соответственно. Работа с ними основывается на тех же принципах, что описаны и показаны в примерах выше.  
 Объект `optional` у UserWord, Statistics, Settings имеет ограничение по размеру - не более 30 полей и общая длина объекта после `JSON.stringify()` не должна превышать 1500 символов. Структуру этих объектов вы разрабатываете сами исходя из требований и вашей реализации задачи.   
