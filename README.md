@@ -68,7 +68,7 @@ Console:
 {
   "message":"Authenticated",
   "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzk5M2RmNGNhOWQ2MDAxNzg3NDBhZSIsImlhdCI6MTU5MDI2OTE1OCwiZXhwIjoxNTkwMjgzNTU4fQ.XHKmdY_jk1R7PUbgCZfqH8TxH6XQ0USwPBSKNHMdF6I",
-  "userId":{"id":"5ec993df4ca9d600178740ae"}
+  "userId":"5ec993df4ca9d600178740ae"
 }
 ```
 
