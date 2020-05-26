@@ -1,0 +1,510 @@
+openapi: 3.0.0
+info:
+  title: Learn Words
+  description: a backend part of RSSchool Stage#2 task
+  version: 1.0.0
+
+servers:
+  - url: /
+
+components:
+  schemas:
+    Word:
+      type: object
+      properties:
+        id:
+          type: string
+        word:
+          type: string
+        image:
+          type: string
+        audio:
+          type: string
+        audioMeaning:
+          type: string
+        audioExample:
+          type: string
+        textMeaning:
+          type: string
+        textExample:
+          type: string
+        transcription:
+          type: string
+    WordCount:
+      type: object
+      properties:
+        count:
+          type: number
+    UserWord:
+      type: object
+      properties:
+        difficulty:
+          type: string
+        optional:
+          type: object
+          items:
+            type: any
+    Statistic:
+      type: object
+      properties:
+        learnedWords:
+          type: number
+        optional:
+          type: object
+          items:
+            type: any
+    Setting:
+      type: object
+      properties:
+        wordsPerDay:
+          type: number
+        optional:
+          type: object
+          items:
+            type: any
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    Auth:
+      type: object
+      properties:
+        message:
+          type: string
+        token:
+          type: string
+        userId:
+          type: string
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /words:
+    parameters:
+      - name: group
+        in: query
+        required: false
+        description: group number
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: page in the group
+        schema:
+          type: string
+    get:
+      tags:
+        - Words
+      security:
+        []
+      summary: Get a chunk of words
+      description: Gets a chink of words
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Word"
+  /words/count:
+    get:
+      tags:
+        - Words
+      security:
+        []
+      summary: Get a total number of words
+      description: Get a total number of words
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WordCount"
+  /words/{id}:
+    parameters:
+      - name: id
+        description: wordId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Words
+      security:
+        []
+      summary: Get a word by id
+      description: Gets a word by id
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Word"
+  /users:
+    post:
+      tags:
+        - Users
+      security:
+        []
+      summary: Create a new user
+      description: Creates a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                email:
+                  type: string
+                  description: E-mail
+                password:
+                  type: string
+                  description: Password
+      responses:
+        200:
+          description: Successful creation.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/User"
+        422:
+          description: Incorrect e-mail or password
+  /users/{id}:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users
+      summary: Get user
+      description: Gets user
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/User"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: User not found
+    put:
+      tags:
+        - Users
+      summary: Update a user
+      description: Updates a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                email:
+                  type: string
+                  description: E-mail
+                password:
+                  type: string
+                  description: Password
+      responses:
+        200:
+          description: The user has been updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/words:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Words
+      summary: Get all user words
+      description: Gets all user words
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserWord"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      tags:
+        - Users/Words
+      summary: Create a user word
+      description: Create a user word by id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                difficulty:
+                  type: string
+                optional:
+                  type: object
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The user word has been created.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/UserWord"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/words/{wordId}:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: wordId
+        description: wordId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Words
+      summary: Get a user word by id
+      description: Gets a user word by id
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWord"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: User's word not found
+    put:
+      tags:
+        - Users/Words
+      summary: Update a user word
+      description: Updates a user word by id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                difficulty:
+                  type: string
+                optional:
+                  type: object
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The user word has been updated.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/UserWord"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - Users/Words
+      summary: Delete user word
+      description: Deletes user words by id
+      responses:
+        204:
+          description: The user word has been deleted
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/statistics:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Statistic
+      summary: Get statistics
+      description: Gets statistics
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Statistic"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Statistics not found
+    put:
+      tags:
+        - Users/Statistic
+      summary: Upsert statistics
+      description: Upserts new statistics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                learnedWords:
+                  type: number
+                  description: The number of the total learned words
+                optional:
+                  type: object
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The statistics has been created.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Statistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/settings:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users/Setting
+      summary: Get settings
+      description: Gets settings
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Setting"
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Settings not found
+    put:
+      tags:
+        - Users/Setting
+      summary: Upsert settings
+      description: Upserts new settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                wordsPerDay:
+                  type: number
+                  description: The max number of learned words per day
+                optional:
+                  type: object
+                  items:
+                    type: any
+      responses:
+        200:
+          description: The settings has been created.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Setting"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /signin:
+    post:
+      tags:
+        - Sign In
+      security:
+        []
+      summary: Sign in
+      description: Logins a user and returns a JWT-token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                email:
+                  type: string
+                  description: E-mail
+                password:
+                  type: string
+                  description: Password
+      responses:
+        200:
+          description: Successful login.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Auth"
+        403:
+          description: Incorrect e-mail or password

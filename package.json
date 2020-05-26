@@ -1,0 +1,71 @@
+{
+  "name": "learn-words-rs-rest-service",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "type": "commonjs",
+  "description": "LearnWords REST service for RS School",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "start:dev": "nodemon src/server.js",
+    "lint": "eslint ./ --ignore-path .gitignore --fix",
+    "heroku-postbuild": "npm install --only=dev"
+  },
+  "keywords": [
+    "rs",
+    "school",
+    "rest",
+    "node",
+    "express",
+    "LearnWords"
+  ],
+  "license": "ISC",
+  "engines": {
+    "node": "12.16.x"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
+    "cross-env": "6.0.3",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^3.22.0",
+    "http-errors": "^1.7.3",
+    "http-status-codes": "^1.4.0",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.7",
+    "morgan": "^1.10.0",
+    "npm": "^6.14.4",
+    "swagger-ui-express": "4.1.2",
+    "uuid": "3.3.3",
+    "winston": "^3.2.1",
+    "yamljs": "0.3.0"
+  },
+  "devDependencies": {
+    "eslint": "6.7.2",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-node": "10.0.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "husky": "3.1.0",
+    "lint-staged": "9.5.0",
+    "nodemon": "2.0.2",
+    "prettier": "1.19.1"
+  }
+}
