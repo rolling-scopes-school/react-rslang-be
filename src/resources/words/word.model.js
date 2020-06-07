@@ -13,7 +13,10 @@ const WordsSchema = new Schema(
     audioExample: { type: String, required: false, max: 150 },
     textMeaning: { type: String, required: false, max: 300 },
     textExample: { type: String, required: false, max: 300 },
-    transcription: { type: String, required: false, max: 100 }
+    transcription: { type: String, required: false, max: 100 },
+    wordTranslate: String,
+    textMeaningTranslate: String,
+    textExampleTranslate: String
   },
   { collection: 'words' }
 );
