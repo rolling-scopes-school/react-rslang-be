@@ -33,7 +33,7 @@ const schemas = {
           return helpers.error('any.invalid');
         }
 
-        if (!/[+-_@$!%*?&#.,;:[\]{}]/.test(password)) {
+        if (!/[-+_@$!%*?&#.,;:[\]{}]/.test(password)) {
           return helpers.error('any.invalid');
         }
 
