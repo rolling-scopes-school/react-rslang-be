@@ -1,5 +1,6 @@
-const { OK } = require('http-status-codes');
+const { OK, NO_CONTENT } = require('http-status-codes');
 const router = require('express').Router();
+
 const userService = require('./user.service');
 const { id, user } = require('../../utils/validation/sсhemas');
 const {
@@ -30,6 +31,16 @@ router.put(
   async (req, res) => {
     const userEntity = await userService.update(req.userId, req.body);
     res.status(OK).send(userEntity.toResponse());
+  }
+);
+
+router.delete(
+  '/:id',
+  userIdValidator,
+  validator(id, 'params'),
+  async (req, res) => {
+    await userService.remove(req.params.id);
+    res.sendStatus(NO_CONTENT);
   }
 );
 

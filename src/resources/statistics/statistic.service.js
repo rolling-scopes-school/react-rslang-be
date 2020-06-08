@@ -5,4 +5,6 @@ const get = async userId => statisticRepo.get(userId);
 const upsert = async (userId, statistic) =>
   statisticRepo.upsert(userId, { ...statistic, userId });
 
-module.exports = { get, upsert };
+const remove = async userId => statisticRepo.remove(userId);
+
+module.exports = { get, upsert, remove };
