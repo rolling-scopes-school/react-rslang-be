@@ -36,4 +36,6 @@ const save = async user => {
 const update = async (id, user) =>
   User.findOneAndUpdate({ _id: id }, { $set: user });
 
-module.exports = { get, getUserByEmail, save, update };
+const remove = async id => User.deleteOne({ _id: id });
+
+module.exports = { get, getUserByEmail, save, update, remove };

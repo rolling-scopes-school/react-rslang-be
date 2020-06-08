@@ -17,4 +17,6 @@ const upsert = async (userId, statistic) =>
     { upsert: true, new: true }
   );
 
-module.exports = { get, upsert };
+const remove = async userId => Statistics.deleteOne({ userId });
+
+module.exports = { get, upsert, remove };

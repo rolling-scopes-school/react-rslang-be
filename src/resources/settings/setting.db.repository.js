@@ -17,4 +17,6 @@ const upsert = async (userId, setting) =>
     { upsert: true, new: true }
   );
 
-module.exports = { get, upsert };
+const remove = async userId => Settings.deleteOne({ userId });
+
+module.exports = { get, upsert, remove };
