@@ -30,6 +30,12 @@ components:
           type: string
         transcription:
           type: string
+        wordTranslate:
+          type: string
+        textMeaningTranslate:
+          type: string
+        textExampleTranslate:
+          type: string
     WordCount:
       type: object
       properties:
@@ -241,6 +247,16 @@ paths:
                 $ref: "#/components/schemas/User"
         400:
           description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      description: Deletes a user by id
+      responses:
+        204:
+          description: The user has been deleted
         401:
           $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/words:
