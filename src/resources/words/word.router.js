@@ -3,23 +3,55 @@ const router = require('express').Router();
 
 const wordService = require('./word.service');
 const { BAD_REQUEST_ERROR } = require('../../errors/appErrors');
+const extractQueryParam = require('../../utils/getQueryNumberParameter');
 
 router.route('/').get(async (req, res) => {
-  const page = req.query.page ? parseInt(req.query.page, 10) : 0;
-  const group = req.query.group ? parseInt(req.query.group, 10) : 0;
+  const page = extractQueryParam(req.query.page, 0);
+  const group = extractQueryParam(req.query.group, 0);
+  const wordsPerPage = extractQueryParam(req.query.wordsPerPage, 10);
+  const wordsPerExampleSentenceLTE = extractQueryParam(
+    req.query.wordsPerExampleSentenceLTE,
+    0
+  );
 
-  if (isNaN(page) || isNaN(group)) {
+  if (isNaN(page) || isNaN(group) || isNaN(wordsPerExampleSentenceLTE)) {
     throw new BAD_REQUEST_ERROR(
-      'Wrong query parameters, the page and per page numbers should be valid integers'
+      'Wrong query parameters, the group, page and words-per-example-sentence numbers should be valid integers'
     );
   }
 
-  const words = await wordService.getAll(page, group);
+  const words = await wordService.getAll({
+    page,
+    group,
+    wordsPerExampleSentenceLTE,
+    wordsPerPage
+  });
   res.status(OK).send(words.map(word => word.toResponse()));
 });
 
 router.route('/count').get(async (req, res) => {
-  const count = await wordService.getCount();
+  const group = extractQueryParam(req.query.group, 0);
+  const wordsPerPage = extractQueryParam(req.query.wordsPerPage, 10);
+  const wordsPerExampleSentenceLTE = extractQueryParam(
+    req.query.wordsPerExampleSentenceLTE,
+    0
+  );
+
+  if (
+    isNaN(wordsPerExampleSentenceLTE) ||
+    isNaN(group) ||
+    isNaN(wordsPerPage)
+  ) {
+    throw new BAD_REQUEST_ERROR(
+      'Wrong query parameters, the group, words-per-page and words-per-example-sentence numbers should be valid integers'
+    );
+  }
+
+  let count = await wordService.getCount(group, wordsPerExampleSentenceLTE);
+  if (wordsPerExampleSentenceLTE > 0) {
+    count = Math.floor(count / wordsPerPage);
+  }
+
   res.status(OK).send({ count });
 });
 
