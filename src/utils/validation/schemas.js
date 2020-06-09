@@ -5,6 +5,8 @@ const {
   MAX_SYMBOLS_PER_OBJECT
 } = require('../../common/config');
 
+const SYMBOLS_REGEX = /[-+_@$!%*?&#.,;:[\]{}]/;
+
 const optionalScheme = Joi.object()
   .max(MAX_OPTIONAL_PROPERTIES)
   .pattern(/.*/, [Joi.string(), Joi.number(), Joi.boolean(), Joi.date()])
@@ -33,7 +35,7 @@ const schemas = {
           return helpers.error('any.invalid');
         }
 
-        if (!/[-+_@$!%*?&#.,;:[\]{}]/.test(password)) {
+        if (!SYMBOLS_REGEX.test(password)) {
           return helpers.error('any.invalid');
         }
 
@@ -52,7 +54,7 @@ const schemas = {
         const emptyString = password
           .replace(/[a-z]/gi, '')
           .replace(/[0-9]/g, '')
-          .replace(/[+-_@$!%*?&#.,;:[\]{}]/g, '');
+          .replace(new RegExp(SYMBOLS_REGEX, 'g'), '');
         if (emptyString) {
           return helpers.error('any.invalid');
         }

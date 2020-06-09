@@ -1,6 +1,6 @@
 const { OK, NO_CONTENT } = require('http-status-codes');
 const router = require('express').Router({ mergeParams: true });
-const { userWord, wordId } = require('../../utils/validation/sсhemas');
+const { userWord, wordId } = require('../../utils/validation/schemas');
 const { validator } = require('../../utils/validation/validator');
 
 const userWordService = require('./userWord.service');

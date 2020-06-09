@@ -2,7 +2,7 @@ const { OK, NO_CONTENT } = require('http-status-codes');
 const router = require('express').Router();
 
 const userService = require('./user.service');
-const { id, user } = require('../../utils/validation/sсhemas');
+const { id, user } = require('../../utils/validation/schemas');
 const {
   validator,
   userIdValidator

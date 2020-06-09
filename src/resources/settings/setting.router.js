@@ -1,7 +1,7 @@
 const { OK } = require('http-status-codes');
 const router = require('express').Router({ mergeParams: true });
 const settingService = require('./setting.service');
-const { settings } = require('../../utils/validation/sсhemas');
+const { settings } = require('../../utils/validation/schemas');
 const { validator } = require('../../utils/validation/validator');
 
 router.get('/', async (req, res) => {
