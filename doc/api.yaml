@@ -314,6 +314,20 @@ paths:
                   $ref: "#/components/schemas/UserWord"
         401:
           $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/words/{wordId}:
+    parameters:
+      - name: id
+        description: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: wordId
+        description: wordId
+        in: path
+        required: true
+        schema:
+          type: string
     post:
       tags:
         - Users/Words
@@ -339,25 +353,11 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/UserWord"
+                $ref: "#/components/schemas/UserWord"
         400:
           description: Bad request
         401:
           $ref: '#/components/responses/UnauthorizedError'
-  /users/{id}/words/{wordId}:
-    parameters:
-      - name: id
-        description: userId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: wordId
-        description: wordId
-        in: path
-        required: true
-        schema:
-          type: string
     get:
       tags:
         - Users/Words
