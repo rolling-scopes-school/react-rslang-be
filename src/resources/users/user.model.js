@@ -25,6 +25,14 @@ User.pre('save', async function preSave(next) {
   next();
 });
 
+User.pre('findOneAndUpdate', async function preUpdate(next) {
+  this._update.$set.password = await bcrypt.hash(
+    this._update.$set.password,
+    10
+  );
+  next();
+});
+
 addMethods(User);
 
 module.exports = mongoose.model('users', User);
