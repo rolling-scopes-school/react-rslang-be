@@ -437,7 +437,7 @@ paths:
       - name: filter
         in: query
         required: false
-        description: Filter by user word fields. It should be a stringified object.
+        description: Filter by user word fields. It should be a stringified object(e.g. {"difficulty":"hard", "optional.key":"value"})
         schema:
           type: string
     get:
