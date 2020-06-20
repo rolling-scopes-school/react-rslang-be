@@ -16,7 +16,7 @@ const getAll = async conditions => {
   return Word.find({ group, page });
 };
 
-const getCount = async (group, wordsPerExampleSentenceLTE) => {
+const getQuantity = async (group, wordsPerExampleSentenceLTE) => {
   const conditions = wordsPerExampleSentenceLTE
     ? { group, wordsPerExampleSentence: { $lte: wordsPerExampleSentenceLTE } }
     : { group };
@@ -31,4 +31,4 @@ const get = async id => {
   return word;
 };
 
-module.exports = { getAll, getCount, get };
+module.exports = { getAll, getQuantity, get };
