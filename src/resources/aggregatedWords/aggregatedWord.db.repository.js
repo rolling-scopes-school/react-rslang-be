@@ -42,25 +42,22 @@ const pipeline = [
   }
 ];
 
-const getAll = async (userId, page, perPage, filter) => {
+const getAll = async (userId, perPage, filter) => {
   lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
     userId
   );
 
   const match = {
     $match: {
-      $or: [
-        { userWord: { $exists: false } },
-        {
-          $and: filter
-        }
-      ]
+      $or: [{ userWord: { $exists: false } }, filter]
     }
   };
 
+  console.log(JSON.stringify(match, null, 1));
+
   const facet = {
     $facet: {
-      paginatedResults: [{ $skip: page * perPage }, { $limit: perPage }],
+      paginatedResults: [{ $limit: perPage }],
       totalCount: [
         {
           $count: 'count'

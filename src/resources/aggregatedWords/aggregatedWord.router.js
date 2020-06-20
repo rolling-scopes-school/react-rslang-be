@@ -7,35 +7,19 @@ const aggregatedWordsService = require('./aggregatedWord.service');
 const { BAD_REQUEST_ERROR } = require('../../errors/appErrors');
 const extractQueryParam = require('../../utils/getQueryNumberParameter');
 
-function extractFilter(filter) {
-  if (!filter) {
-    return [];
-  }
-
-  return Object.entries(JSON.parse(filter)).reduce((arr, [k, v]) => {
-    const obj = {};
-    obj[k] = v;
-    arr.push(obj);
-  }, []);
-}
-
 router.get('/', async (req, res) => {
-  const page = extractQueryParam(req.query.page, 0);
   const perPage = extractQueryParam(req.query.wordsPerPage, 10);
 
-  if (isNaN(page) || isNaN(perPage)) {
+  if (isNaN(perPage)) {
     throw new BAD_REQUEST_ERROR(
-      'Wrong query parameters: page and words-per-page numbers should be valid integers'
+      'Wrong query parameters: the words-per-page number should be a valid integer'
     );
   }
 
-  const filter = extractFilter(req.query.filter);
-  console.log(JSON.stringify(filter, null, 1));
   const words = await aggregatedWordsService.getAll(
     req.userId,
-    page,
     perPage,
-    filter
+    JSON.parse(req.query.filter)
   );
   res.status(OK).send(words);
 });
