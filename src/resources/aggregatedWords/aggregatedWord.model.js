@@ -4,8 +4,8 @@ const { addMethods } = require('../../utils/toResponse');
 
 const UserWordsSchema = new Schema(
   {
-    wordId: { type: mongoose.Schema.Types.ObjectID, required: true },
-    userId: { type: mongoose.Schema.Types.ObjectID, required: true },
+    wordId: { type: String, required: true },
+    userId: { type: String, required: true },
     difficulty: { type: String, required: false },
     optional: {
       type: Object,

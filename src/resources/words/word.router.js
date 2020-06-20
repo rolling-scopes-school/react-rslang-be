@@ -14,9 +14,14 @@ router.route('/').get(async (req, res) => {
     0
   );
 
-  if (isNaN(page) || isNaN(group) || isNaN(wordsPerExampleSentenceLTE)) {
+  if (
+    isNaN(page) ||
+    isNaN(group) ||
+    isNaN(wordsPerPage) ||
+    isNaN(wordsPerExampleSentenceLTE)
+  ) {
     throw new BAD_REQUEST_ERROR(
-      'Wrong query parameters, the group, page and words-per-example-sentence numbers should be valid integers'
+      'Wrong query parameters: the group, page, words-per-page and words-per-example-sentence numbers should be valid integers'
     );
   }
 
@@ -47,12 +52,15 @@ router.route('/count').get(async (req, res) => {
     );
   }
 
-  let count = await wordService.getCount(group, wordsPerExampleSentenceLTE);
+  let quantity = await wordService.getQuantity(
+    group,
+    wordsPerExampleSentenceLTE
+  );
   if (wordsPerExampleSentenceLTE > 0) {
-    count = Math.floor(count / wordsPerPage);
+    quantity = Math.floor(quantity / wordsPerPage);
   }
 
-  res.status(OK).send({ count });
+  res.status(OK).send({ count: quantity });
 });
 
 router.route('/:id').get(async (req, res) => {
