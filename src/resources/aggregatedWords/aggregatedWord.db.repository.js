@@ -42,18 +42,25 @@ const pipeline = [
   }
 ];
 
-const getAll = async (userId, perPage, filter) => {
+const getAll = async (userId, group, perPage, filter, onlyUserWords) => {
   lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
     userId
   );
 
   const match = {
     $match: {
-      $or: [{ userWord: { $exists: false } }, filter]
+      $and: [
+        {
+          $or: [{ userWord: { $exists: onlyUserWords } }]
+        },
+        { group }
+      ]
     }
   };
 
-  console.log(JSON.stringify(match, null, 1));
+  if (filter) {
+    match.$match.$and[0].$or.push(filter);
+  }
 
   const facet = {
     $facet: {
@@ -65,8 +72,7 @@ const getAll = async (userId, perPage, filter) => {
       ]
     }
   };
-  const pipeEnd = filter.length ? [match, facet] : [facet];
-  return await Word.aggregate([lookup, ...pipeline, ...pipeEnd]);
+  return await Word.aggregate([lookup, ...pipeline, match, facet]);
 };
 
 const get = async (wordId, userId) => {

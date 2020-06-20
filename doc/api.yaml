@@ -422,10 +422,10 @@ paths:
         required: true
         schema:
           type: string
-      - name: page
+      - name: group
         in: query
         required: false
-        description: page
+        description: group
         schema:
           type: string
       - name: wordsPerPage
@@ -440,6 +440,12 @@ paths:
         description: Filter by user word fields. It should be a stringified object(e.g. {"difficulty":"hard", "optional.key":"value"}) which meet MongoDB Query object conditions.
         schema:
           type: string
+      - name: onlyUserWords
+        in: query
+        required: false
+        description: get words that have linked UserWord only
+        schema:
+          type: boolean
     get:
       tags:
         - Users/AggregatedWords

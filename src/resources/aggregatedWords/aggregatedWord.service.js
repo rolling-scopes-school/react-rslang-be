@@ -1,7 +1,7 @@
 const wordRepo = require('./aggregatedWord.db.repository');
 
-const getAll = async (userId, perPage, filter) =>
-  wordRepo.getAll(userId, perPage, filter);
+const getAll = async (userId, group, perPage, filter, onlyUserWords) =>
+  wordRepo.getAll(userId, group, perPage, filter, onlyUserWords);
 
 const get = async (wordId, userId) => wordRepo.get(wordId, userId);
 
