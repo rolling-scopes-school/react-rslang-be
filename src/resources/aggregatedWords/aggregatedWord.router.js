@@ -18,14 +18,12 @@ router.get('/', async (req, res) => {
   }
 
   const filter = req.query.filter ? JSON.parse(req.query.filter) : null;
-  const onlyUserWords = req.query.onlyUserWords.toLowerCase() === 'true';
 
   const words = await aggregatedWordsService.getAll(
     req.userId,
     group,
     perPage,
-    filter,
-    onlyUserWords
+    filter
   );
   res.status(OK).send(words);
 });

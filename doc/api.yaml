@@ -437,15 +437,12 @@ paths:
       - name: filter
         in: query
         required: false
-        description: Filter by user word fields. It should be a stringified object(e.g. {"difficulty":"hard", "optional.key":"value"}) which meet MongoDB Query object conditions.
+        description: Filter by aggreagted word fields. It should be a stringified object which meet MongoDB Query object conditions.<br>
+          Get all words that have difficulte="hard AND optional.key="value <pre>{"$and":[{"userWord.difficulty":"hard", "userWord.optional.key":"value"}]}</pre><br>
+          Get all words that have difficulty equal="easy" OR do not have the linked userWord <pre>{"$or":[{"userWord.difficulty":"easy"},{"userWord":null}]}</pre><br>
+          Get all words that have BOTH difficulty equal="easy" AND optional.repeat=true, OR do not have the linked userWord <pre>{"$or":[{"$and":[{"userWord.difficulty":"easy", "userWord.optional.repeat":true}]},{"userWord":null}]}</pre><br>
         schema:
           type: string
-      - name: onlyUserWords
-        in: query
-        required: false
-        description: get words that have linked UserWord only
-        schema:
-          type: boolean
     get:
       tags:
         - Users/AggregatedWords
