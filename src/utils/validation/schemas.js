@@ -9,7 +9,13 @@ const SYMBOLS_REGEX = /[-+_@$!%*?&#.,;:[\]{}]/;
 
 const optionalScheme = Joi.object()
   .max(MAX_OPTIONAL_PROPERTIES)
-  .pattern(/.*/, [Joi.string(), Joi.number(), Joi.boolean(), Joi.date()])
+  .pattern(/.*/, [
+    Joi.string(),
+    Joi.number(),
+    Joi.boolean(),
+    Joi.date(),
+    Joi.object()
+  ])
   .custom(optionalValidator, 'optional object validation')
   .error(errors => {
     errors
