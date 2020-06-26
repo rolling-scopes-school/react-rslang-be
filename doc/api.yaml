@@ -425,7 +425,7 @@ paths:
       - name: group
         in: query
         required: false
-        description: group(skip if you want filter by all the groups)
+        description: group(skip if you want result not depending on a group)
         schema:
           type: string
       - name: wordsPerPage
