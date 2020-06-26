@@ -9,9 +9,9 @@ const extractQueryParam = require('../../utils/getQueryNumberParameter');
 
 router.get('/', async (req, res) => {
   const perPage = extractQueryParam(req.query.wordsPerPage, 10);
-  const group = extractQueryParam(req.query.group, 0);
+  const group = extractQueryParam(req.query.group);
 
-  if (isNaN(group) || isNaN(perPage)) {
+  if ((req.query.group && isNaN(group)) || isNaN(perPage)) {
     throw new BAD_REQUEST_ERROR(
       'Wrong query parameters: the group and words-per-page number should be valid integers'
     );
