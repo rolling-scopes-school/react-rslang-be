@@ -49,7 +49,7 @@ const getAll = async (userId, group, perPage, filter) => {
 
   const matches = [];
 
-  if (!group && group !== 0) {
+  if (group || group === 0) {
     matches.push({
       $match: {
         group
