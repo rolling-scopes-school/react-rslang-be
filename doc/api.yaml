@@ -195,6 +195,28 @@ paths:
             application/json:
               schema:
                   $ref: "#/components/schemas/Word"
+  /words/{id}/assets:
+    parameters:
+      - name: id
+        description: wordId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Words
+      security:
+        []
+      summary: Get a word assets
+      description: Gets a word assets
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Word"
   /users:
     post:
       tags:
