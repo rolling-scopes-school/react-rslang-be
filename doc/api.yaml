@@ -219,6 +219,9 @@ paths:
               type: object
               title: example
               properties:
+                name:
+                  type: string
+                  description: User name
                 email:
                   type: string
                   description: E-mail
