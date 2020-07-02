@@ -12,7 +12,6 @@ const { NOT_FOUND } = require('http-status-codes');
 
 const winston = require('./common/logging');
 const wordRouter = require('./resources/words/word.router');
-const assetsRouter = require('./resources/assets/assets.router');
 const signinRouter = require('./resources/authentication/signin.router');
 const userRouter = require('./resources/users/user.router');
 const userWordsRouter = require('./resources/userWords/userWord.router');
@@ -52,8 +51,6 @@ app.use(
 );
 
 app.use('/words', wordRouter);
-
-wordRouter.use('/:id/assets', assetsRouter);
 
 app.use('/signin', signinRouter);
 

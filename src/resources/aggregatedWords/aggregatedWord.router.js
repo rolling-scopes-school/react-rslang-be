@@ -30,6 +30,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:wordId', validator(wordId, 'params'), async (req, res) => {
   const word = await aggregatedWordsService.get(req.params.wordId, req.userId);
+
   res.status(OK).send(word);
 });
 
