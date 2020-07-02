@@ -71,6 +71,8 @@ components:
     User:
       type: object
       properties:
+        name:
+          type: string
         email:
           type: string
         password:
@@ -82,11 +84,17 @@ components:
           type: string
         token:
           type: string
+        refreshToken:
+          type: string
         userId:
+          type: string
+        name:
           type: string
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid
+    UnauthenticatedError:
+      description: Access token is missing, expired or invalid
   securitySchemes:
     bearerAuth:
       type: http
@@ -290,6 +298,28 @@ paths:
           description: The user has been deleted
         401:
           $ref: '#/components/responses/UnauthorizedError'
+  /users/{id}/tokens:
+    parameters:
+      - name: id
+        description: user id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Users
+      summary: Get new user tokens
+      description: Gets new user tokens
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Auth"
+        403:
+          $ref: '#/components/responses/UnauthenticatedError'
   /users/{id}/words:
     parameters:
       - name: id
@@ -312,7 +342,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/UserWord"
-        401:
+        402:
           $ref: '#/components/responses/UnauthorizedError'
   /users/{id}/words/{wordId}:
     parameters:

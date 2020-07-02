@@ -33,6 +33,7 @@ const schemas = {
   user: Joi.object()
     .options({ abortEarly: false, allowUnknown: true })
     .keys({
+      name: Joi.string(),
       email: Joi.string().email({ tlds: { allow: false } }),
       password: Joi.string().custom((value, helpers) => {
         const password = value.trim();

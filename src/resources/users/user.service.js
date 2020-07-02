@@ -1,9 +1,10 @@
 const bcrypt = require('bcrypt');
 
-const { AUTHENTICATION_ERROR } = require('../../errors/appErrors');
 const usersRepo = require('./user.db.repository');
-const statisticService = require('../statistics/statistic.service');
+const tokenService = require('../token/token.service');
 const settingsService = require('../settings/setting.service');
+const statisticService = require('../statistics/statistic.service');
+const { AUTHENTICATION_ERROR } = require('../../errors/appErrors');
 
 const authenticate = async user => {
   const userEntity = await usersRepo.getUserByEmail(user.email);
@@ -13,7 +14,9 @@ const authenticate = async user => {
     throw new AUTHENTICATION_ERROR();
   }
 
-  return { id: userEntity._id };
+  const tokens = await tokenService.getTokens(userEntity._id);
+
+  return { ...tokens, userId: userEntity._id, name: userEntity.name };
 };
 
 const get = id => usersRepo.get(id);
