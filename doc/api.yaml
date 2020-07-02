@@ -186,30 +186,8 @@ paths:
         - Words
       security:
         []
-      summary: Get a word by id
-      description: Gets a word by id
-      responses:
-        200:
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                  $ref: "#/components/schemas/Word"
-  /words/{id}/assets:
-    parameters:
-      - name: id
-        description: wordId
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      tags:
-        - Words
-      security:
-        []
-      summary: Get a word assets
-      description: Gets a word assets
+      summary: Get a word with assets by id
+      description: Gets a word with assets by id
       responses:
         200:
           description: Successful operation
