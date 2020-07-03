@@ -46,15 +46,15 @@ const logger = winston.createLogger({
   exceptionHandlers: [new winston.transports.File(options.fileUnhandled)]
 });
 
-if (process.env.NODE_ENV === 'development') {
-  logger.add(
-    new winston.transports.Console({
-      format: combine(colorize(), cli()),
-      handleExceptions: true,
-      colorize: true
-    })
-  );
-}
+// if (process.env.NODE_ENV === 'development') {
+logger.add(
+  new winston.transports.Console({
+    format: combine(colorize(), cli()),
+    handleExceptions: true,
+    colorize: true
+  })
+);
+// }
 
 logger.stream = {
   write: message => logger.info(message)
