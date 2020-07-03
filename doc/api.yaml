@@ -189,6 +189,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: noAssets
+        in: query
+        required: false
+        description: if true then get word with pathes to assets instead from assets itself
+        schema:
+          type: string
     get:
       tags:
         - Words
