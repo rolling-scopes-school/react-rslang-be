@@ -26,12 +26,18 @@ const save = async (wordId, userId, userWord) => {
   }
 };
 
-const update = async (wordId, userId, userWord) =>
-  UserWord.findOneAndUpdate(
+const update = async (wordId, userId, userWord) => {
+  const updatedWord = await UserWord.findOneAndUpdate(
     { wordId, userId },
     { $set: userWord },
     { new: true }
   );
+  if (!updatedWord) {
+    throw new NOT_FOUND_ERROR(ENTITY_NAME, { wordId, userId });
+  }
+
+  return updatedWord;
+};
 
 const remove = async (wordId, userId) => UserWord.deleteOne({ wordId, userId });
 
