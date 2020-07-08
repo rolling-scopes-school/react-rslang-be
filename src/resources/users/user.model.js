@@ -27,10 +27,13 @@ User.pre('save', async function preSave(next) {
 });
 
 User.pre('findOneAndUpdate', async function preUpdate(next) {
-  this._update.$set.password = await bcrypt.hash(
-    this._update.$set.password,
-    10
-  );
+  if (this._update.$set.password) {
+    this._update.$set.password = await bcrypt.hash(
+      this._update.$set.password,
+      10
+    );
+  }
+
   next();
 });
 
