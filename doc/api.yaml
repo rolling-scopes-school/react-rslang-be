@@ -467,6 +467,12 @@ paths:
         description: group(skip if you want result not depending on a group)
         schema:
           type: string
+      - name: page
+        in: query
+        required: false
+        description: page number
+        schema:
+          type: string
       - name: wordsPerPage
         in: query
         required: false
