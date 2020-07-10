@@ -42,7 +42,7 @@ const pipeline = [
   }
 ];
 
-const getAll = async (userId, group, perPage, filter) => {
+const getAll = async (userId, group, page, perPage, filter) => {
   lookup.$lookup.pipeline[0].$match.$expr.$and[0].$eq[1] = mongoose.Types.ObjectId(
     userId
   );
@@ -64,10 +64,9 @@ const getAll = async (userId, group, perPage, filter) => {
       }
     });
   }
-
   const facet = {
     $facet: {
-      paginatedResults: [{ $limit: perPage }],
+      paginatedResults: [{ $skip: page * perPage }, { $limit: perPage }],
       totalCount: [
         {
           $count: 'count'
