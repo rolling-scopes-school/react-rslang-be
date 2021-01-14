@@ -119,18 +119,6 @@ paths:
         description: page in the group
         schema:
           type: string
-      - name: wordsPerExampleSentenceLTE
-        in: query
-        required: false
-        description: words per example sentence(less then equal to)
-        schema:
-          type: string
-      - name: wordsPerPage
-        in: query
-        required: false
-        description: words per page, works only if wordsPerExampleSentenceLTE is specified. Equals 10 by default
-        schema:
-          type: string
     get:
       tags:
         - Words
@@ -153,19 +141,7 @@ paths:
         - name: group
           in: query
           required: false
-          description: group number
-          schema:
-            type: string
-        - name: wordsPerExampleSentenceLTE
-          in: query
-          required: false
-          description: words per example sentence(less then equal to)
-          schema:
-            type: string
-        - name: wordsPerPage
-          in: query
-          required: false
-          description: words per page. Equals 10 by default
+          description: group number (default 0)
           schema:
             type: string
       tags:
