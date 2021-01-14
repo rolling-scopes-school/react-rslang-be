@@ -5,8 +5,7 @@ const wordRepo = require('./word.db.repository');
 
 const getAll = async conditions => wordRepo.getAll(conditions);
 
-const getQuantity = async (group, wordsPerExampleSentenceLTE) =>
-  wordRepo.getQuantity(group, wordsPerExampleSentenceLTE);
+const getQuantity = async group => wordRepo.getQuantity(group);
 
 const get = async (wordId, noAssets) => {
   const word = await wordRepo.get(wordId);
