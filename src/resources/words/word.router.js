@@ -37,7 +37,7 @@ router.route('/count').get(async (req, res) => {
 });
 
 router.route('/:id').get(async (req, res) => {
-  const word = await wordService.get(req.params.id, req.query.noAssets);
+  const word = await wordService.get(req.params.id);
   res.status(OK).send(word.toResponse());
 });
 
