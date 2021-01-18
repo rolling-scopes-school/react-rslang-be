@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Learn Words
-  description: a backend part of RSSchool Stage#2 task
+  title: React Learn Words
+  description: a backend part of RSSchool-React "Learn words" task
   version: 1.0.0
 
 servers:
@@ -36,11 +36,6 @@ components:
           type: string
         textExampleTranslate:
           type: string
-    WordCount:
-      type: object
-      properties:
-        count:
-          type: number
     UserWord:
       type: object
       properties:
@@ -135,28 +130,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Word"
-  /words/count:
-    get:
-      parameters:
-        - name: group
-          in: query
-          required: false
-          description: group number (default 0)
-          schema:
-            type: string
-      tags:
-        - Words
-      security:
-        []
-      summary: Get a total number of words. If wordsPerExampleSentenceLTE is specified then returns number of full pages.
-      description: Get a total number of words. If wordsPerExampleSentenceLTE is specified then returns number of full pages.
-      responses:
-        200:
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/WordCount"
   /words/{id}:
     parameters:
       - name: id

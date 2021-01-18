@@ -22,20 +22,6 @@ router.route('/').get(async (req, res) => {
   res.status(OK).send(words.map(word => word.toResponse()));
 });
 
-router.route('/count').get(async (req, res) => {
-  const group = extractQueryParam(req.query.group, 0);
-
-  if (isNaN(group)) {
-    throw new BAD_REQUEST_ERROR(
-      'Wrong query parameters, the group should be valid integer'
-    );
-  }
-
-  const quantity = await wordService.getQuantity(group);
-
-  res.status(OK).send({ count: quantity });
-});
-
 router.route('/:id').get(async (req, res) => {
   const word = await wordService.get(req.params.id);
   res.status(OK).send(word.toResponse());
