@@ -1,21 +1,25 @@
 # LearnWords
-A backend part of [Front-End Stage#2 RS.School task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/rslang.md)
+A backend part of [React RS.School task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-rslang.md)
 
-#### [Deployed project](https://afternoon-falls-25894.herokuapp.com/)  
-#### [Swagger docs](https://afternoon-falls-25894.herokuapp.com/doc/#)
+#### [Deployed project](https://react-learnwords-example.herokuapp.com)  
+#### [Swagger docs](https://react-learnwords-example.herokuapp.com/doc/#)
+
+## Деплой
+
+Сделайте форк репозитория и следуйте [инструкции по деплою и настройке приложения](https://github.com/rolling-scopes-school/-LearnWords-react/wiki).
 
 ## Примеры получения исходных данных
 
-Для этого создан REST API по адресу: https://afternoon-falls-25894.herokuapp.com/
+Для этого создан REST API по адресу: https://react-learnwords-example.herokuapp.com/
 
-Для тестирования API можно пользоваться Swagger докой по адресу: https://afternoon-falls-25894.herokuapp.com/doc/#/
+Для тестирования API можно пользоваться Swagger докой по адресу: https://react-learnwords-example.herokuapp.com/doc/
 
 Описание эндпоинтов(не полное, смотри Swagger Doc):
 
 ### Words
 
 GET для получения списка слов:
-`https://afternoon-falls-25894.herokuapp.com/words?page=2&group=0` - получить слова со 2-й страницы группы 0  
+`https://<your app>.herokuapp.com/words?page=2&group=0` - получить слова со 2-й страницы группы 0  
 Строка запроса должна содержать в себе номер группы и номер страницы. Всего 6 групп(от 0 до 5) и в каждой группе по 30 страниц(от 0 до 29). В каждой странице по 20 слов. Группы разбиты по сложности от самой простой(0) до самой сложной(5).
 
 ### Users
@@ -23,7 +27,7 @@ GET для получения списка слов:
 Система поддерживает разграничение данных по пользователям, в рамках данной задачи вам понадобится создать форму для регистрации пользователя. Для этого надо использовать POST эндпоинт по адресу `/users`. В запросе надо передать JSON объект, который содержит e-mail и password пользователя. Пароль должен содержать не менее 8 символов. Пример запроса:  
 ```javascript
 const createUser = async user => {
-     const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/users', {
+     const rawResponse = await fetch('https://<your app>.herokuapp.com/users', {
        method: 'POST',
        headers: {
          'Accept': 'application/json',
@@ -49,7 +53,7 @@ Console: {
 Чтобы пользоваться эндпоинтами требующими авторизации необходимо залогиниться в систему и получить JWT токен. Для этого существует POST эндоинт по адресу `/signin`. Токены имеют ограниченный срок жизни, в текущей реализации это 4 часа с момента получения. Пример запроса:  
 ```javascript
 const loginUser = async user => {
-  const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/signin', {
+  const rawResponse = await fetch('https://<your app>.herokuapp.com/signin', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -78,7 +82,7 @@ Console:
 ```javascript
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzk5M2RmNGNhOWQ2MDAxNzg3NDBhZSIsImlhdCI6MTU5MDI2OTE1OCwiZXhwIjoxNTkwMjgzNTU4fQ.XHKmdY_jk1R7PUbgCZfqH8TxH6XQ0USwPBSKNHMdF6I';
 const createUserWord = async ({ userId, wordId, word }) => {
-  const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+  const rawResponse = await fetch(`https://<your app>.com/users/${userId}/words/${wordId}`, {
     method: 'POST',
     withCredentials: true,
     headers: {
@@ -110,7 +114,7 @@ Console: {
 }
 
 const getUserWord = async ({ userId, wordId }) => {
-  const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+  const rawResponse = await fetch(`https://<your app>.herokuapp.com/users/${userId}/words/${wordId}`, {
     method: 'GET',
     withCredentials: true,
     headers: {

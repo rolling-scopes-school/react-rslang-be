@@ -14,6 +14,10 @@ components:
       properties:
         id:
           type: string
+        group:
+          type: number
+        page:
+          type: number
         word:
           type: string
         image:
