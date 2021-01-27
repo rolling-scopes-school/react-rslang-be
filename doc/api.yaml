@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Learn Words
-  description: a backend part of RSSchool Stage#2 task
+  title: React Learn Words
+  description: a backend part of RSSchool-React "Learn words" task
   version: 1.0.0
 
 servers:
@@ -14,6 +14,10 @@ components:
       properties:
         id:
           type: string
+        group:
+          type: number
+        page:
+          type: number
         word:
           type: string
         image:
@@ -36,11 +40,6 @@ components:
           type: string
         textExampleTranslate:
           type: string
-    WordCount:
-      type: object
-      properties:
-        count:
-          type: number
     UserWord:
       type: object
       properties:
@@ -119,18 +118,6 @@ paths:
         description: page in the group
         schema:
           type: string
-      - name: wordsPerExampleSentenceLTE
-        in: query
-        required: false
-        description: words per example sentence(less then equal to)
-        schema:
-          type: string
-      - name: wordsPerPage
-        in: query
-        required: false
-        description: words per page, works only if wordsPerExampleSentenceLTE is specified. Equals 10 by default
-        schema:
-          type: string
     get:
       tags:
         - Words
@@ -147,52 +134,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Word"
-  /words/count:
-    get:
-      parameters:
-        - name: group
-          in: query
-          required: false
-          description: group number
-          schema:
-            type: string
-        - name: wordsPerExampleSentenceLTE
-          in: query
-          required: false
-          description: words per example sentence(less then equal to)
-          schema:
-            type: string
-        - name: wordsPerPage
-          in: query
-          required: false
-          description: words per page. Equals 10 by default
-          schema:
-            type: string
-      tags:
-        - Words
-      security:
-        []
-      summary: Get a total number of words. If wordsPerExampleSentenceLTE is specified then returns number of full pages.
-      description: Get a total number of words. If wordsPerExampleSentenceLTE is specified then returns number of full pages.
-      responses:
-        200:
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/WordCount"
   /words/{id}:
     parameters:
       - name: id
         description: wordId
         in: path
         required: true
-        schema:
-          type: string
-      - name: noAssets
-        in: query
-        required: false
-        description: if true then get word with pathes to assets instead from assets itself
         schema:
           type: string
     get:

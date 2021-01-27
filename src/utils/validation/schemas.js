@@ -2,10 +2,9 @@ const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const {
   MAX_OPTIONAL_PROPERTIES,
-  MAX_SYMBOLS_PER_OBJECT
+  MAX_SYMBOLS_PER_OBJECT,
+  MIN_PASSWORD_LENGTH
 } = require('../../common/config');
-
-const SYMBOLS_REGEX = /[-+_@$!%*?&#.,;:[\]{}]/;
 
 const optionalScheme = Joi.object()
   .max(MAX_OPTIONAL_PROPERTIES)
@@ -35,39 +34,7 @@ const schemas = {
     .keys({
       name: Joi.string().max(200),
       email: Joi.string().email({ tlds: { allow: false } }),
-      password: Joi.string().custom((value, helpers) => {
-        const password = value.trim();
-
-        if (password.length < 8) {
-          return helpers.error('any.invalid');
-        }
-
-        if (!SYMBOLS_REGEX.test(password)) {
-          return helpers.error('any.invalid');
-        }
-
-        if (!/[0-9]/.test(password)) {
-          return helpers.error('any.invalid');
-        }
-
-        if (!/[A-Z]/.test(password)) {
-          return helpers.error('any.invalid');
-        }
-
-        if (!/[a-z]/.test(password)) {
-          return helpers.error('any.invalid');
-        }
-
-        const emptyString = password
-          .replace(/[a-z]/gi, '')
-          .replace(/[0-9]/g, '')
-          .replace(new RegExp(SYMBOLS_REGEX, 'g'), '');
-        if (emptyString) {
-          return helpers.error('any.invalid');
-        }
-
-        return password;
-      }, 'password validation')
+      password: Joi.string().min(MIN_PASSWORD_LENGTH)
     }),
   userWord: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
