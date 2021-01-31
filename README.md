@@ -1,8 +1,8 @@
 # LearnWords
 A backend part of [React RS.School task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-rslang.md)
 
-#### [Deployed project](https://react-learnwords-example.herokuapp.com)  
-#### [Swagger docs](https://react-learnwords-example.herokuapp.com/doc/#)
+#### [Wiki проекта](https://github.com/rolling-scopes-school/-LearnWords-react/wiki)  
+#### [Swagger документация](https://react-learnwords-example.herokuapp.com/doc/#)
 #### [Примеры запросов к API](https://github.com/rolling-scopes-school/-LearnWords-react/wiki/%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2-%D0%BA-API)
 
 ## Деплой
