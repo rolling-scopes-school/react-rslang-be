@@ -178,6 +178,9 @@ paths:
                 email:
                   type: string
                   description: E-mail
+                photo:
+                  type: string
+                  description: Photo
                 password:
                   type: string
                   description: Password

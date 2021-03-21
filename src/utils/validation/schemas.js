@@ -34,6 +34,7 @@ const schemas = {
     .keys({
       name: Joi.string().max(200),
       email: Joi.string().email({ tlds: { allow: false } }),
+      photo: Joi.string(),
       password: Joi.string().min(MIN_PASSWORD_LENGTH)
     }),
   userWord: Joi.object()
