@@ -70,7 +70,9 @@ components:
     User:
       type: object
       properties:
-        name:
+        username:
+          type: string
+        avatar:
           type: string
         email:
           type: string
@@ -172,9 +174,12 @@ paths:
               type: object
               title: example
               properties:
-                name:
+                username:
                   type: string
                   description: User name
+                avatar:
+                  type: string
+                  description: Base64 encoded image
                 email:
                   type: string
                   description: E-mail
@@ -227,6 +232,12 @@ paths:
               type: object
               title: example
               properties:
+                username:
+                  type: string
+                  description: Username
+                avatar:
+                  type: string
+                  description: Base64 encoded image
                 email:
                   type: string
                   description: E-mail
