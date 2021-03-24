@@ -16,7 +16,12 @@ const authenticate = async user => {
 
   const tokens = await tokenService.getTokens(userEntity._id);
 
-  return { ...tokens, userId: userEntity._id, name: userEntity.name };
+  return {
+    ...tokens,
+    userId: userEntity._id,
+    name: userEntity.name,
+    email: userEntity.email
+  };
 };
 
 const get = id => usersRepo.get(id);
