@@ -15,17 +15,17 @@ const authenticate = async user => {
   }
 
   const tokens = await tokenService.getTokens(userEntity._id);
-
+  console.log(userEntity);
   return {
     ...tokens,
     userId: userEntity._id,
     name: userEntity.name,
-    email: userEntity.email
+    email: userEntity.email,
+    foto64: userEntity.foto64
   };
 };
 
 const get = id => usersRepo.get(id);
-
 const save = user => usersRepo.save(user);
 
 const update = (id, user) => usersRepo.update(id, user);
