@@ -12,6 +12,7 @@ const { NOT_FOUND } = require('http-status-codes');
 
 const winston = require('./common/logging');
 const wordRouter = require('./resources/words/word.router');
+const questionRouter = require('./resources/questions/question.router');
 const signinRouter = require('./resources/authentication/signin.router');
 const userRouter = require('./resources/users/user.router');
 const userTokenRouter = require('./resources/token/token.router');
@@ -55,6 +56,8 @@ app.use(
 );
 
 app.use('/words', wordRouter);
+
+app.use('/questions', questionRouter);
 
 app.use('/signin', signinRouter);
 
