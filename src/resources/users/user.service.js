@@ -21,7 +21,8 @@ const authenticate = async user => {
     userId: userEntity._id,
     name: userEntity.name,
     email: userEntity.email,
-    foto64: userEntity.foto64
+    foto64: userEntity.foto64,
+    level: userEntity.level
   };
 };
 

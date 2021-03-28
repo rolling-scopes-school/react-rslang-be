@@ -20,6 +20,10 @@ const User = new Schema(
     foto64: {
       type: String,
       required: false
+    },
+    level: {
+      type: String,
+      required: false
     }
   },
   { collection: 'users' }
