@@ -34,7 +34,6 @@ router.route('/all').get(async (req, res) => {
   const words = await wordService.getAllPages({
     group
   });
-  console.log(words);
 
   res.status(OK).send(words.map(word => word.toResponse()));
 });
