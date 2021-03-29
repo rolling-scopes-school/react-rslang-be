@@ -134,6 +134,30 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Word"
+  /words/all:
+    parameters:
+      - name: group
+        in: query
+        required: false
+        description: group number
+        schema:
+          type: string
+    get:
+      tags:
+        - Words
+      security:
+        []
+      summary: Get all words
+      description: Gets all words
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Word"
   /words/{id}:
     parameters:
       - name: id
