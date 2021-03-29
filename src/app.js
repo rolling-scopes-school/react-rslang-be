@@ -1,5 +1,6 @@
 require('express-async-errors');
 const express = require('express');
+const formData = require('express-form-data');
 const createError = require('http-errors');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
@@ -29,6 +30,7 @@ const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(formData.parse());
 
 app.use('/files', express.static(path.join(__dirname, '../files')));
 
