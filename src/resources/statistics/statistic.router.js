@@ -16,7 +16,6 @@ router.put('/', validator(statistics, 'body'), async (req, res) => {
 });
 
 router.put('/gameadd/:id', validator(statistics, 'body'), async (req, res) => {
-  console.log(req.params.id);
   const statistic = await statisticService.pushStat(
     req.userId,
     req.params.id,
