@@ -12,10 +12,52 @@ const StatisticSchema = new Schema(
       type: Number
     },
     optional: {
-      type: Object,
-      required: false
+      gameStatistic: {
+        savanna: {
+          total: [
+            {
+              date: Number,
+              level: String,
+              know: Number,
+              dont_know: Number
+            }
+          ]
+        },
+        sprint: {
+          total: [
+            {
+              date: Number,
+              level: String,
+              know: Number,
+              dont_know: Number
+            }
+          ]
+        },
+
+        audiocall: {
+          total: [
+            {
+              date: Number,
+              level: String,
+              know: Number,
+              dont_know: Number
+            }
+          ]
+        },
+        constructors: {
+          total: [
+            {
+              date: Number,
+              level: String,
+              know: Number,
+              dont_know: Number
+            }
+          ]
+        }
+      }
     }
   },
+
   { collection: 'statistic' }
 );
 

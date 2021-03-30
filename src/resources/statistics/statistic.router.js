@@ -10,7 +10,18 @@ router.get('/', async (req, res) => {
 });
 
 router.put('/', validator(statistics, 'body'), async (req, res) => {
+  console.log(req.body);
   const statistic = await statisticService.upsert(req.userId, req.body);
+  res.status(OK).send(statistic.toResponse());
+});
+
+router.put('/gameadd/:id', validator(statistics, 'body'), async (req, res) => {
+  console.log(req.params.id);
+  const statistic = await statisticService.pushStat(
+    req.userId,
+    req.params.id,
+    req.body
+  );
   res.status(OK).send(statistic.toResponse());
 });
 
