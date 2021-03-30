@@ -1,5 +1,5 @@
 const User = require('./user.model');
-const { NOT_FOUND_ERROR, ENTITY_EXISTS } = require('../../errors/appErrors');
+const { NOT_FOUND_ERROR } = require('../../errors/appErrors');
 const ENTITY_NAME = 'user';
 const MONGO_ENTITY_EXISTS_ERROR_CODE = 11000;
 
@@ -26,10 +26,9 @@ const save = async user => {
     return await User.create(user);
   } catch (err) {
     if (err.code === MONGO_ENTITY_EXISTS_ERROR_CODE) {
-      throw new ENTITY_EXISTS(`${ENTITY_NAME} with this e-mail exists`);
-    } else {
-      throw err;
+      return { error: 'User with this e-mail exists' };
     }
+    throw err;
   }
 };
 

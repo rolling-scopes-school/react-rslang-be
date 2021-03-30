@@ -10,6 +10,21 @@ const {
 
 router.post('/', validator(user, 'body'), async (req, res) => {
   const userEntity = await userService.save(req.body);
+
+  if (userEntity && userEntity.error) {
+    return res.status(417).json({
+      error: {
+        status: 'failed',
+        errors: [
+          {
+            path: ['email'],
+            message: userEntity.error
+          }
+        ]
+      }
+    });
+  }
+
   res.status(OK).send(userEntity.toResponse());
 });
 
