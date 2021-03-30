@@ -24,6 +24,7 @@ router.route('/').get(async (req, res) => {
 
 router.route('/all').get(async (req, res) => {
   const group = extractQueryParam(req.query.group, 0);
+  const amount = extractQueryParam(req.query.amount, 10);
 
   if (isNaN(group)) {
     throw new BAD_REQUEST_ERROR(
@@ -35,7 +36,11 @@ router.route('/all').get(async (req, res) => {
     group
   });
 
-  res.status(OK).send(words.map(word => word.toResponse()));
+  const shuffledSplicedWords = words
+    .sort(() => Math.random() - 0.5)
+    .splice(amount);
+
+  res.status(OK).send(shuffledSplicedWords.map(word => word.toResponse()));
 });
 
 router.route('/:id').get(async (req, res) => {
