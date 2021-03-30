@@ -15,37 +15,36 @@ class AppError extends Error {
 
 class NotFoundError extends AppError {
   constructor(entity, params, message) {
-    super(
-      message || `Couldn't find a(an) ${entity} with: ${JSON.stringify(params)}`
-    );
+    super(JSON.stringify(message) || JSON.stringify('Пользователь не найден'));
     this.status = NOT_FOUND;
   }
 }
 
 class BadRequestError extends AppError {
   constructor(message) {
-    super(message);
+    super(JSON.stringify(message));
     this.status = BAD_REQUEST;
   }
 }
 
 class EntityExistsError extends AppError {
   constructor(message) {
-    super(message);
+    super(JSON.stringify(message));
+
     this.status = EXPECTATION_FAILED;
   }
 }
 
 class AuthorizationError extends AppError {
   constructor(message) {
-    super(message || getStatusText(UNAUTHORIZED));
+    super(JSON.stringify(message) || getStatusText(UNAUTHORIZED));
     this.status = UNAUTHORIZED;
   }
 }
 
 class AuthenticationError extends AppError {
   constructor(message) {
-    super(message || getStatusText(FORBIDDEN));
+    super(JSON.stringify(message) || getStatusText(FORBIDDEN));
     this.status = FORBIDDEN;
   }
 }
