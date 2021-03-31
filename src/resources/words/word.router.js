@@ -30,7 +30,6 @@ router.route('/all').get(async (req, res) => {
       'Wrong query parameter: the group should be valid integer'
     );
   }
-  console.log(group);
   const words = await wordService.getAllPages({
     group
   });
