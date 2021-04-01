@@ -37,7 +37,7 @@ router.route('/all').get(async (req, res) => {
 
   const shuffledSplicedWords = words
     .sort(() => Math.random() - 0.5)
-    .splice(amount);
+    .splice(0, amount);
 
   res.status(OK).send(shuffledSplicedWords.map(word => word.toResponse()));
 });
