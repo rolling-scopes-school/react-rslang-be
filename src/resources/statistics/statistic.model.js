@@ -9,11 +9,28 @@ const StatisticSchema = new Schema(
       required: true
     },
     learnedWords: {
-      type: Number
+      type: Number,
+      required: true
     },
-    optional: {
-      type: Object,
-      required: false
+    date: {
+      type: Number,
+      required: true
+    },
+    gameId: {
+      type: String,
+      required: true
+    },
+    rightAnswers: {
+      type: Number,
+      required: true
+    },
+    wrongAnswers: {
+      type: Number,
+      required: true
+    },
+    maxSerie: {
+      type: Number,
+      required: true
     }
   },
   { collection: 'statistic' }

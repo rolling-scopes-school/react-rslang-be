@@ -54,10 +54,16 @@ components:
       properties:
         learnedWords:
           type: number
-        optional:
-          type: object
-          items:
-            type: any
+        date:
+          type: number
+        gameId:
+          type: number
+        rightAnswers:
+          type: number
+        wrongAnswers:
+          type: number
+        maxSerie:
+          type: number
     Setting:
       type: object
       properties:
@@ -505,6 +511,42 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         404:
           description: Statistics not found
+    post:
+      tags:
+        - Users/Statistic
+      summary: Upsert statistics
+      description: Posts new statistics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                learnedWords:
+                  type: number
+                date:
+                  type: number
+                gameId:
+                  type: number
+                rightAnswers:
+                  type: number
+                wrongAnswers:
+                  type: number
+                maxSerie:
+                  type: number
+      responses:
+        200:
+          description: The statistics has been created.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Statistic"
+        400:
+          description: Bad request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
     put:
       tags:
         - Users/Statistic

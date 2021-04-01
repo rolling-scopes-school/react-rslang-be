@@ -9,6 +9,12 @@ router.get('/', async (req, res) => {
   res.status(OK).send(statistic.toResponse());
 });
 
+router.post('/', validator(statistics, 'body'), async (req, res) => {
+  console.log(req.body);
+  const statistic = await statisticService.save(req.userId, req.body);
+  res.status(OK).send(statistic);
+});
+
 router.put('/', validator(statistics, 'body'), async (req, res) => {
   const statistic = await statisticService.upsert(req.userId, req.body);
   res.status(OK).send(statistic.toResponse());

@@ -49,7 +49,20 @@ const schemas = {
         .integer()
         .min(0)
         .max(100000),
-      optional: optionalScheme
+      date: Joi.date(),
+      gameId: Joi.string(),
+      rightAnswers: Joi.number()
+        .integer()
+        .min(0)
+        .max(100000),
+      wrongAnswers: Joi.number()
+        .integer()
+        .min(0)
+        .max(100000),
+      maxSerie: Joi.number()
+        .integer()
+        .min(0)
+        .max(100000)
     }),
   settings: Joi.object()
     .options({ abortEarly: false, allowUnknown: false })
