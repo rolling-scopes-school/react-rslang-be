@@ -8,6 +8,7 @@ const { AUTHENTICATION_ERROR } = require('../../errors/appErrors');
 
 const authenticate = async user => {
   const userEntity = await usersRepo.getUserByEmail(user.email);
+  console.log(userEntity);
 
   const isValidated = await bcrypt.compare(user.password, userEntity.password);
   if (!isValidated) {
@@ -16,7 +17,12 @@ const authenticate = async user => {
 
   const tokens = await tokenService.getTokens(userEntity._id);
 
-  return { ...tokens, userId: userEntity._id, name: userEntity.name };
+  return {
+    ...tokens,
+    userId: userEntity._id,
+    name: userEntity.name,
+    avatar: userEntity.avatar
+  };
 };
 
 const get = id => usersRepo.get(id);
