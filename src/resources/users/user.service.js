@@ -21,7 +21,7 @@ const authenticate = async user => {
 
 const get = id => usersRepo.get(id);
 
-const save = user => usersRepo.save(user);
+const save = req => usersRepo.save(req);
 
 const update = (id, user) => usersRepo.update(id, user);
 

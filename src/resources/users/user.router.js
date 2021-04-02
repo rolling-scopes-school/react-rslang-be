@@ -9,7 +9,7 @@ const {
 } = require('../../utils/validation/validator');
 
 router.post('/', validator(user, 'body'), async (req, res) => {
-  const userEntity = await userService.save(req.body);
+  const userEntity = await userService.save(req);
 
   if (userEntity && userEntity.error) {
     return res.status(417).json({
