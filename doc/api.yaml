@@ -536,6 +536,13 @@ paths:
                   type: number
                 maxSerie:
                   type: number
+              example:
+                learnedWords: 10
+                date: 1617371264479
+                gameId: 1
+                rightAnswers: 5
+                wrongAnswers: 15
+                maxSerie: 3
       responses:
         200:
           description: The statistics has been created.
