@@ -21,6 +21,7 @@ const authenticate = async user => {
     ...tokens,
     userId: userEntity._id,
     name: userEntity.name,
+    email: userEntity.email,
     avatar: userEntity.avatar
   };
 };
