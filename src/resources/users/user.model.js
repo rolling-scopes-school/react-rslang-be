@@ -16,6 +16,9 @@ const User = new Schema(
       required: true,
       trim: true,
       minlength: 8
+    },
+    avatar: {
+      type: String
     }
   },
   { collection: 'users' }
