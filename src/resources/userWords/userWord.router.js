@@ -43,6 +43,20 @@ router.put(
   }
 );
 
+router.put(
+  'learn/:wordId',
+  validator(wordId, 'params'),
+  validator(userWord, 'body'),
+  async (req, res) => {
+    const word = await userWordService.updateLearn(
+      req.params.wordId,
+      req.userId,
+      req.body
+    );
+    res.status(OK).send(word.toResponse());
+  }
+);
+
 router.delete('/:wordId', validator(wordId, 'params'), async (req, res) => {
   await userWordService.remove(req.params.wordId, req.userId);
   res.sendStatus(NO_CONTENT);
