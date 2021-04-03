@@ -15,6 +15,7 @@ const get = async (wordId, userId) => {
 };
 
 const save = async (wordId, userId, userWord) => {
+  console.log(userWord);
   try {
     return await UserWord.create(userWord);
   } catch (err) {
@@ -56,8 +57,7 @@ const updateLearn = async (wordId, userId, userWord) => {
       {
         $set: { 'optional.learning': true, 'optional.learned': false },
         $inc: { 'optional.inCorrectCount': 1 }
-      },
-      { new: true }
+      }
     );
   }
 
