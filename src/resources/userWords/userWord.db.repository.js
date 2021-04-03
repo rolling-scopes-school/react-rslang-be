@@ -15,6 +15,7 @@ const get = async (wordId, userId) => {
 };
 
 const save = async (wordId, userId, userWord) => {
+  console.log(userWord);
   try {
     return await UserWord.create(userWord);
   } catch (err) {
@@ -29,8 +30,7 @@ const save = async (wordId, userId, userWord) => {
 const update = async (wordId, userId, userWord) => {
   const updatedWord = await UserWord.findOneAndUpdate(
     { wordId, userId },
-    { $set: userWord },
-    { new: true }
+    { $set: userWord }
   );
   if (!updatedWord) {
     throw new NOT_FOUND_ERROR(ENTITY_NAME, { wordId, userId });
@@ -47,8 +47,7 @@ const updateLearn = async (wordId, userId, userWord) => {
       {
         $set: { 'optional.learning': true, 'optional.learned': true },
         $inc: { 'optional.correctCount': 1 }
-      },
-      { new: true }
+      }
     );
   } else {
     updatedWord = await UserWord.findOneAndUpdate(
@@ -56,8 +55,7 @@ const updateLearn = async (wordId, userId, userWord) => {
       {
         $set: { 'optional.learning': true, 'optional.learned': false },
         $inc: { 'optional.inCorrectCount': 1 }
-      },
-      { new: true }
+      }
     );
   }
 
