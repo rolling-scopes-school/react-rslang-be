@@ -30,7 +30,8 @@ const save = async (wordId, userId, userWord) => {
 const update = async (wordId, userId, userWord) => {
   const updatedWord = await UserWord.findOneAndUpdate(
     { wordId, userId },
-    { $set: userWord }
+    { $set: userWord },
+    { new: true }
   );
   if (!updatedWord) {
     throw new NOT_FOUND_ERROR(ENTITY_NAME, { wordId, userId });
@@ -47,7 +48,8 @@ const updateLearn = async (wordId, userId, userWord) => {
       {
         $set: { 'optional.learning': true, 'optional.learned': true },
         $inc: { 'optional.correctCount': 1 }
-      }
+      },
+      { new: true }
     );
   } else {
     updatedWord = await UserWord.findOneAndUpdate(
