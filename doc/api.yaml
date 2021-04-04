@@ -142,6 +142,18 @@ paths:
         description: group number
         schema:
           type: string
+      - name: amount
+        in: query
+        required: false
+        description: amount of words
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: page number
+        schema:
+          type: string
     get:
       tags:
         - Words

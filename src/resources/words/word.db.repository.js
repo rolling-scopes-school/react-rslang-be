@@ -9,9 +9,11 @@ const getAll = async conditions => {
 };
 
 const getAllPages = async conditions => {
-  const { group } = conditions;
-
-  return Word.find({ group });
+  const { group, page, minPage } = conditions;
+  return Word.find({
+    group,
+    page: { $lte: page, $gte: minPage }
+  });
 };
 
 const get = async id => {
