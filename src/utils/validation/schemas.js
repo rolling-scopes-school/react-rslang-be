@@ -40,6 +40,15 @@ const schemas = {
     .options({ abortEarly: false, allowUnknown: false })
     .keys({
       difficulty: Joi.string().max(50),
+      stats: Joi.object()
+        .options({ abortEarly: false, allowUnknown: true })
+        .keys({
+          wrongGameAnswersCount: Joi.number(),
+          correctGameAnswersCount: Joi.number()
+        }),
+      learningStartDate: Joi.date(),
+      isLearning: Joi.boolean(),
+      isDeleted: Joi.boolean(),
       optional: optionalScheme
     }),
   statistics: Joi.object()
