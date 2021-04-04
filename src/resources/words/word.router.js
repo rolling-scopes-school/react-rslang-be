@@ -23,7 +23,7 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/all').get(async (req, res) => {
-  const maxPagesInGroup = 20;
+  const maxPagesInGroup = 30;
   const group = extractQueryParam(req.query.group, 0);
   const amount = extractQueryParam(req.query.amount, 10);
   const page = extractQueryParam(req.query.page, -1);
@@ -79,6 +79,7 @@ router.route('/all').get(async (req, res) => {
       extraWords.slice(0, lackOfWords > 0 ? lackOfWords : 0)
     );
   }
+
   const shuffledSplicedWords = words.sort(() => Math.random() - 0.5);
 
   res.status(OK).send(shuffledSplicedWords.map(word => word.toResponse()));
