@@ -1,5 +1,6 @@
 const User = require('./user.model');
-const { NOT_FOUND_ERROR, ENTITY_EXISTS } = require('../../errors/appErrors');
+const cloudinary = require('cloudinary').v2;
+const { NOT_FOUND_ERROR } = require('../../errors/appErrors');
 const ENTITY_NAME = 'user';
 const MONGO_ENTITY_EXISTS_ERROR_CODE = 11000;
 
@@ -21,15 +22,30 @@ const get = async id => {
   return user;
 };
 
-const save = async user => {
+const save = async req => {
+  const { body: user, files } = req;
   try {
-    return await User.create(user);
+    const condidate = await User.findOne({ email: user.email });
+
+    if (condidate) {
+      throw { code: MONGO_ENTITY_EXISTS_ERROR_CODE };
+    }
+
+    if (files && files.avatar && files.avatar.path) {
+      const avatar = await cloudinary.uploader.upload(files.avatar.path, {
+        upload_preset: 'rslang-avatart'
+      });
+      if (avatar.secure_url) {
+        return await User.create({ ...user, avatar: avatar.secure_url });
+      }
+    }
+
+    return await User.create({ ...user, avatar: '' });
   } catch (err) {
     if (err.code === MONGO_ENTITY_EXISTS_ERROR_CODE) {
-      throw new ENTITY_EXISTS(`${ENTITY_NAME} with this e-mail exists`);
-    } else {
-      throw err;
+      return { error: 'User with this e-mail exists' };
     }
+    throw err;
   }
 };
 

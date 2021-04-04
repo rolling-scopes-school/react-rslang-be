@@ -22,6 +22,26 @@ router.route('/').get(async (req, res) => {
   res.status(OK).send(words.map(word => word.toResponse()));
 });
 
+router.route('/all').get(async (req, res) => {
+  const group = extractQueryParam(req.query.group, 0);
+  const amount = extractQueryParam(req.query.amount, 10);
+
+  if (isNaN(group) || isNaN(amount)) {
+    throw new BAD_REQUEST_ERROR(
+      'Wrong query parameter: the group or amount should be valid integer'
+    );
+  }
+  const words = await wordService.getAllPages({
+    group
+  });
+
+  const shuffledSplicedWords = words
+    .sort(() => Math.random() - 0.5)
+    .splice(0, amount);
+
+  res.status(OK).send(shuffledSplicedWords.map(word => word.toResponse()));
+});
+
 router.route('/:id').get(async (req, res) => {
   const word = await wordService.get(req.params.id);
   res.status(OK).send(word.toResponse());
