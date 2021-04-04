@@ -55,7 +55,7 @@ router.route('/all').get(async (req, res) => {
       page: maxPage,
       minPage
     });
-    console.log(minPage, maxPage, extraWords.length);
+
     if (page === -1) {
       words = words.concat(
         extraWords
@@ -81,7 +81,7 @@ router.route('/all').get(async (req, res) => {
   }
 
   const shuffledSplicedWords = words.sort(() => Math.random() - 0.5);
-  console.log(shuffledSplicedWords.length);
+
   res.status(OK).send(shuffledSplicedWords.map(word => word.toResponse()));
 });
 
