@@ -15,6 +15,7 @@ const get = async (wordId, userId) => {
 };
 
 const save = async (wordId, userId, userWord) => {
+  console.log(userWord);
   try {
     return await UserWord.create(userWord);
   } catch (err) {
@@ -39,6 +40,33 @@ const update = async (wordId, userId, userWord) => {
   return updatedWord;
 };
 
+const updateLearn = async (wordId, userId, userWord) => {
+  let updatedWord = {};
+  if (userWord.optional.isCorrect) {
+    updatedWord = await UserWord.findOneAndUpdate(
+      { wordId, userId },
+      {
+        $set: { 'optional.learning': true, 'optional.learned': true },
+        $inc: { 'optional.correctCount': 1 }
+      },
+      { new: true }
+    );
+  } else {
+    updatedWord = await UserWord.findOneAndUpdate(
+      { wordId, userId },
+      {
+        $set: { 'optional.learning': true, 'optional.learned': false },
+        $inc: { 'optional.inCorrectCount': 1 }
+      }
+    );
+  }
+
+  if (!updatedWord) {
+    throw new NOT_FOUND_ERROR(ENTITY_NAME, { wordId, userId });
+  }
+  return updatedWord;
+};
+
 const remove = async (wordId, userId) => UserWord.deleteOne({ wordId, userId });
 
-module.exports = { getAll, get, save, update, remove };
+module.exports = { getAll, get, save, update, remove, updateLearn };

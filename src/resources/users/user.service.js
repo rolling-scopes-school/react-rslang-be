@@ -15,7 +15,7 @@ const authenticate = async user => {
   }
 
   const tokens = await tokenService.getTokens(userEntity._id);
-  console.log(userEntity);
+
   return {
     ...tokens,
     userId: userEntity._id,

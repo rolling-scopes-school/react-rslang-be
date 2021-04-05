@@ -10,6 +10,9 @@ const save = async (wordId, userId, userWord) =>
 const update = async (wordId, userId, userWord) =>
   wordRepo.update(wordId, userId, { ...userWord, wordId, userId });
 
+const updateLearn = async (wordId, userId, userWord) =>
+  wordRepo.updateLearn(wordId, userId, { ...userWord, wordId, userId });
+
 const remove = async (wordId, userId) => wordRepo.remove(wordId, userId);
 
-module.exports = { getAll, get, save, update, remove };
+module.exports = { getAll, get, save, update, updateLearn, remove };

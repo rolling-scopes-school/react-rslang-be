@@ -19,7 +19,6 @@ router.get(
   validator(id, 'params'),
   async (req, res) => {
     const userEntity = await userService.get(req.params.id);
-    console.log('router', userEntity);
     res.status(OK).send(userEntity.toResponse());
   }
 );
