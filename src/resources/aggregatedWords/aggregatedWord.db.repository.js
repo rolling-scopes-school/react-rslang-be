@@ -49,7 +49,8 @@ const getAll = async (userId, group, page, perPage, filter) => {
 
   const matches = [];
 
-  if (group || group === 0) {
+  if (group >= 0) {
+    console.log('match');
     matches.push({
       $match: {
         group

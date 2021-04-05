@@ -16,20 +16,23 @@ const StatisticSchema = new Schema(
         savanna: {
           total: [
             {
-              date: Number,
-              level: String,
+              date: Date,
+              gameType: String,
               know: Number,
-              dont_know: Number
+              dont_know: Number,
+              combo: Number
             }
-          ]
+          ],
+          forDate: []
         },
         sprint: {
           total: [
             {
-              date: Number,
-              level: String,
+              date: Date,
+              gameType: String,
               know: Number,
-              dont_know: Number
+              dont_know: Number,
+              combo: Number
             }
           ]
         },
@@ -37,20 +40,22 @@ const StatisticSchema = new Schema(
         audiocall: {
           total: [
             {
-              date: Number,
-              level: String,
+              date: Date,
+              gameType: String,
               know: Number,
-              dont_know: Number
+              dont_know: Number,
+              combo: Number
             }
           ]
         },
         constructors: {
           total: [
             {
-              date: Number,
-              level: String,
+              date: Date,
+              gameType: String,
               know: Number,
-              dont_know: Number
+              dont_know: Number,
+              combo: Number
             }
           ]
         }

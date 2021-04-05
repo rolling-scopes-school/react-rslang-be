@@ -24,4 +24,14 @@ router.put('/gameadd/:id', validator(statistics, 'body'), async (req, res) => {
   res.status(OK).send(statistic.toResponse());
 });
 
+router.get('/gamedata/:date/gameType/:type', async (req, res) => {
+  const statistic = await statisticService.getStat(
+    req.userId,
+    req.params.date,
+    req.params.type
+  );
+  console.log('router', statistic);
+  res.status(OK).send(statistic);
+});
+
 module.exports = router;
