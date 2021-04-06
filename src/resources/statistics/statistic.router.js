@@ -29,7 +29,7 @@ router.get('/gamedata/:date/gameType/:type', async (req, res) => {
     req.params.date,
     req.params.type
   );
-  console.log('router', statistic);
+
   res.status(OK).send(statistic);
 });
 

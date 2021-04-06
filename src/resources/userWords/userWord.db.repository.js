@@ -15,7 +15,6 @@ const get = async (wordId, userId) => {
 };
 
 const save = async (wordId, userId, userWord) => {
-  console.log(userWord);
   try {
     return await UserWord.create(userWord);
   } catch (err) {

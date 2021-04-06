@@ -51,6 +51,7 @@ const getStat = async (userId, date, gameType) => {
         }
       }
     },
+    { $unwind: `$optional.gameStatistic.${[gameType]}.total.wordsId` },
     {
       $group: {
         _id: '$_id',
@@ -61,13 +62,44 @@ const getStat = async (userId, date, gameType) => {
         gameLosTotal: {
           $sum: `$optional.gameStatistic.${[gameType]}.total.dont_know`
         },
+        wordsCount: {
+          $addToSet: `$optional.gameStatistic.${[gameType]}.total.wordsId`
+        },
         maxCombo: { $max: `$optional.gameStatistic.${[gameType]}.total.combo` },
-        count: { $sum: 1 }
+        gameCount: { $sum: 1 }
+      }
+    },
+    {
+      $addFields: {
+        gameType: [gameType]
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        gameType: '$gameType',
+        gameCount: '$gameCount',
+        wordsCountArr: '$wordsCount',
+        correctAvg: {
+          $trunc: [
+            {
+              $divide: [
+                {
+                  $multiply: [100, '$gameWinTotal']
+                },
+                {
+                  $sum: ['$gameWinTotal', '$gameLosTotal']
+                }
+              ]
+            },
+            0
+          ]
+        },
+        maxCombo: '$maxCombo'
       }
     }
   ]);
 
-  console.log(statistic);
   if (!statistic) {
     throw new NOT_FOUND_ERROR('statistic', `userId: ${userId}`);
   }

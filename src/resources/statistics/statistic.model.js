@@ -20,7 +20,8 @@ const StatisticSchema = new Schema(
               gameType: String,
               know: Number,
               dont_know: Number,
-              combo: Number
+              combo: Number,
+              wordsId: [String]
             }
           ],
           forDate: []
@@ -32,7 +33,8 @@ const StatisticSchema = new Schema(
               gameType: String,
               know: Number,
               dont_know: Number,
-              combo: Number
+              combo: Number,
+              wordsId: [String]
             }
           ]
         },
@@ -44,7 +46,8 @@ const StatisticSchema = new Schema(
               gameType: String,
               know: Number,
               dont_know: Number,
-              combo: Number
+              combo: Number,
+              wordsId: [String]
             }
           ]
         },
@@ -55,7 +58,8 @@ const StatisticSchema = new Schema(
               gameType: String,
               know: Number,
               dont_know: Number,
-              combo: Number
+              combo: Number,
+              wordsId: [String]
             }
           ]
         }
