@@ -19,31 +19,29 @@ const upsert = async (userId, statistic) =>
   );
 
 const pushStat = async (userId, gameType, statistic) => {
-  const set = `optional.gameStatistic.${gameType}.total`;
+  const set = 'optional.gameStatistic.total';
+
   return Statistics.findOneAndUpdate(
     { userId },
     {
       $push: {
-        [set]: statistic.optional.gameStatistic[gameType].total[0]
+        [set]: statistic.optional.gameStatistic.total[0]
       }
     },
     { upsert: true }
   );
 };
 
-const getStat = async (userId, date, gameType) => {
-  const today = moment(date);
-  const dateField = `optional.gameStatistic.${[gameType]}.total.date`;
+const getStat = async (userId, date) => {
+  const today = moment(new Date(date));
   const statistic = await Statistics.aggregate([
     {
-      $match: {
-        userId
-      }
+      $match: { userId }
     },
-    { $unwind: `$optional.gameStatistic.${[gameType]}.total` },
+    { $unwind: '$optional.gameStatistic.total' },
     {
       $match: {
-        [dateField]: {
+        'optional.gameStatistic.total.date': {
           $gte: today.toDate(),
           $lte: moment(today)
             .endOf('day')
@@ -51,35 +49,37 @@ const getStat = async (userId, date, gameType) => {
         }
       }
     },
-    { $unwind: `$optional.gameStatistic.${[gameType]}.total.wordsId` },
+
     {
       $group: {
-        _id: '$_id',
+        _id: '$optional.gameStatistic.total.gameType',
 
         gameWinTotal: {
-          $sum: `$optional.gameStatistic.${[gameType]}.total.know`
+          $sum: '$optional.gameStatistic.total.know'
         },
         gameLosTotal: {
-          $sum: `$optional.gameStatistic.${[gameType]}.total.dont_know`
+          $sum: '$optional.gameStatistic.total.dont_know'
         },
+
         wordsCount: {
-          $addToSet: `$optional.gameStatistic.${[gameType]}.total.wordsId`
+          $addToSet: '$optional.gameStatistic.total.wordsId'
         },
-        maxCombo: { $max: `$optional.gameStatistic.${[gameType]}.total.combo` },
+        maxCombo: { $max: '$optional.gameStatistic.total.combo' },
         gameCount: { $sum: 1 }
-      }
-    },
-    {
-      $addFields: {
-        gameType: [gameType]
       }
     },
     {
       $project: {
         _id: 0,
-        gameType: '$gameType',
+        gameType: '$_id',
         gameCount: '$gameCount',
-        wordsCountArr: '$wordsCount',
+        wordsCountArr: {
+          $reduce: {
+            input: '$wordsCount',
+            initialValue: [],
+            in: { $concatArrays: ['$$value', '$$this'] }
+          }
+        },
         correctAvg: {
           $trunc: [
             {
@@ -107,9 +107,7 @@ const getStat = async (userId, date, gameType) => {
   return statistic;
 };
 
-const getTotalStat = async (userId, gameType) => {
-  // const dateField = `optional.gameStatistic.${[gameType]}.total.date`;
-  console.log(userId, gameType);
+const getTotalStat = async userId => {
   const statistic = await Statistics.aggregate([
     {
       $match: {
@@ -118,103 +116,31 @@ const getTotalStat = async (userId, gameType) => {
     },
     {
       $unwind: {
-        path: '$optional.gameStatistic.savanna',
-        preserveNullAndEmptyArrays: true
-      }
-    },
-
-    {
-      $unwind: {
-        path: '$optional.gameStatistic.sprint',
-        preserveNullAndEmptyArrays: true
-      }
-    },
-    {
-      $unwind: {
-        path: '$optional.gameStatistic.constructors',
-        preserveNullAndEmptyArrays: true
-      }
-    },
-
-    {
-      $unwind: {
-        path: '$optional.gameStatistic.audiocall',
+        path: '$optional.gameStatistic.total',
         preserveNullAndEmptyArrays: true
       }
     },
     {
       $group: {
-        _id: '$optional.gameStatistic.sprint.total.date',
+        _id: '$optional.gameStatistic.total.date',
         wordsCount: {
-          $addToSet: '$optional.gameStatistic.sprint.total.wordsId'
+          $addToSet: '$optional.gameStatistic.total.wordsId'
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        date: '$_id',
+        wordsCountArr: {
+          $reduce: {
+            input: '$wordsCount',
+            initialValue: [],
+            in: { $concatArrays: ['$$value', '$$this'] }
+          }
         }
       }
     }
-    // {
-    //   $group: {
-    //     _id: '$optional.gameStatistic.savanna.total.date',
-
-    //     wordsCount: {
-    //       $addToSet: '$optional.gameStatistic.savanna.total.wordsId'
-    //     }
-    //   }
-    // }
-    //   $match: {
-    //     [dateField]: {
-    //       $gte: today.toDate(),
-    //       $lte: moment(today)
-    //         .endOf('day')
-    //         .toDate()
-    //     }
-    //   }
-    // },
-    // { $unwind: `$optional.gameStatistic.${[gameType]}.total.wordsId` },
-    // {
-    //   $group: {
-    //     _id: '$_id',
-
-    //     gameWinTotal: {
-    //       $sum: `$optional.gameStatistic.${[gameType]}.total.know`
-    //     },
-    //     gameLosTotal: {
-    //       $sum: `$optional.gameStatistic.${[gameType]}.total.dont_know`
-    //     },
-    //     wordsCount: {
-    //       $addToSet: `$optional.gameStatistic.${[gameType]}.total.wordsId`
-    //     },
-    //     maxCombo: { $max: `$optional.gameStatistic.${[gameType]}.total.combo` },
-    //     gameCount: { $sum: 1 }
-    //   }
-    // },
-    // {
-    //   $addFields: {
-    //     gameType: [gameType]
-    //   }
-    // },
-    // {
-    //   $project: {
-    //     _id: 0,
-    //     gameType: '$gameType',
-    //     gameCount: '$gameCount',
-    //     wordsCountArr: '$wordsCount',
-    //     correctAvg: {
-    //       $trunc: [
-    //         {
-    //           $divide: [
-    //             {
-    //               $multiply: [100, '$gameWinTotal']
-    //             },
-    //             {
-    //               $sum: ['$gameWinTotal', '$gameLosTotal']
-    //             }
-    //           ]
-    //         },
-    //         0
-    //       ]
-    //     },
-    //     maxCombo: '$maxCombo'
-    //   }
-    // }
   ]);
 
   if (!statistic) {

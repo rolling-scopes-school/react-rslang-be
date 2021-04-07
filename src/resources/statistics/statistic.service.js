@@ -2,11 +2,9 @@ const statisticRepo = require('./statistic.db.repository');
 
 const get = async userId => statisticRepo.get(userId);
 
-const getStat = async (userId, date, gameType) =>
-  statisticRepo.getStat(userId, date, gameType);
+const getStat = async (userId, date) => statisticRepo.getStat(userId, date);
 
-const getTotalStat = async (userId, gameType) =>
-  statisticRepo.getTotalStat(userId, gameType);
+const getTotalStat = async userId => statisticRepo.getTotalStat(userId);
 
 const upsert = async (userId, statistic) =>
   statisticRepo.upsert(userId, { ...statistic, userId });
