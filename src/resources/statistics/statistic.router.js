@@ -33,4 +33,13 @@ router.get('/gamedata/:date/gameType/:type', async (req, res) => {
   res.status(OK).send(statistic);
 });
 
+router.get('/gametotal/gameType/:type', async (req, res) => {
+  const statistic = await statisticService.getTotalStat(
+    req.userId,
+    req.params.type
+  );
+
+  res.status(OK).send(statistic);
+});
+
 module.exports = router;
