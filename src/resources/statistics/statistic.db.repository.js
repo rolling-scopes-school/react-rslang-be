@@ -140,13 +140,16 @@ const getTotalStat = async userId => {
           }
         }
       }
+    },
+    {
+      $sort: { date: 1 }
     }
   ]);
 
   if (!statistic) {
     throw new NOT_FOUND_ERROR('statistic', `userId: ${userId}`);
   }
-  console.log(statistic);
+
   return statistic;
 };
 
