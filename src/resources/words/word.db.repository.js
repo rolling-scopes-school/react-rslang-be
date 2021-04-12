@@ -3,8 +3,10 @@ const { NOT_FOUND_ERROR } = require('../../errors/appErrors');
 const ENTITY_NAME = 'word';
 
 const getAll = async conditions => {
-  const { group, page } = conditions;
-
+  const { group, page, sort } = conditions;
+  if (sort) {
+    return Word.find({ group, page }).sort({ page: 1, word: 1 });
+  }
   return Word.find({ group, page });
 };
 
