@@ -46,7 +46,7 @@ const updateLearn = async (wordId, userId, userWord) => {
       { wordId, userId },
       {
         $set: { 'optional.learning': true, 'optional.learned': true },
-        $inc: { 'optional.correctCount': 1 }
+        $inc: { 'optional.correctCount': 1, 'optional.inCorrectCount': 0 }
       },
       { new: true }
     );
@@ -55,7 +55,7 @@ const updateLearn = async (wordId, userId, userWord) => {
       { wordId, userId },
       {
         $set: { 'optional.learning': true, 'optional.learned': false },
-        $inc: { 'optional.inCorrectCount': 1 }
+        $inc: { 'optional.inCorrectCount': 1, 'optional.correctCount': 0 }
       }
     );
   }

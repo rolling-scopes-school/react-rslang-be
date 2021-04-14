@@ -74,7 +74,9 @@ const getAll = async (userId, group, page, perPage, filter) => {
       ]
     }
   };
-  return await Word.aggregate([lookup, ...pipeline, ...matches, facet]);
+  const data = await Word.aggregate([lookup, ...pipeline, ...matches, facet]);
+
+  return data;
 };
 
 const get = async (wordId, userId) => {
