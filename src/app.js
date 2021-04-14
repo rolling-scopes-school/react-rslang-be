@@ -19,16 +19,19 @@ const userWordsRouter = require('./resources/userWords/userWord.router');
 const aggregatedWordsRouter = require('./resources/aggregatedWords/aggregatedWord.router');
 const statisticRouter = require('./resources/statistics/statistic.router');
 const settingRouter = require('./resources/settings/setting.router');
+const cloudinaryRouter = require('./resources/cloudinary/cloudinary');
 const errorHandler = require('./errors/errorHandler');
 const checkAuthentication = require('./resources/authentication/checkAuthentication');
 const { userIdValidator } = require('./utils/validation/validator');
-
+const fileUpload = require('express-fileupload');
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
-
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 app.use('/files', express.static(path.join(__dirname, '../files')));
 
@@ -68,6 +71,8 @@ userRouter.use('/:id/aggregatedWords', userIdValidator, aggregatedWordsRouter);
 userRouter.use('/:id/statistics', userIdValidator, statisticRouter);
 
 userRouter.use('/:id/settings', userIdValidator, settingRouter);
+
+userRouter.use('/:id/images', userIdValidator, cloudinaryRouter);
 
 app.use((req, res, next) => next(createError(NOT_FOUND)));
 
