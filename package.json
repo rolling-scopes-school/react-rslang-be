@@ -1,71 +1,39 @@
 {
-  "name": "learn-words-rs-rest-service",
+  "name": "onlinestore",
   "version": "1.0.0",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "type": "commonjs",
-  "description": "LearnWords REST service for RS School",
-  "main": "src/server.js",
+  "description": "",
+  "main": "script.js",
   "scripts": {
-    "start": "node src/server.js",
-    "start:dev": "nodemon src/server.js",
-    "lint": "eslint ./ --ignore-path .gitignore --fix",
-    "heroku-postbuild": "npm install --only=dev"
+    "start": "webpack serve --open --config ./webpack.config.js --env mode=dev",
+    "build": "webpack --config ./webpack.config.js --env mode=prod",
+    "lint": "eslint . --ext .ts"
   },
-  "keywords": [
-    "rs",
-    "school",
-    "rest",
-    "node",
-    "express",
-    "LearnWords"
-  ],
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "engines": {
-    "node": "12.16.x"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "npm run lint",
-      "git add"
-    ]
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "css-loader": "^5.1.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.2.0",
+    "prettier": "2.2.1",
+    "style-loader": "^2.0.0",
+    "svg-inline-loader": "^0.8.2",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
-    "bcrypt": "^5.0.0",
-    "cors": "^2.8.5",
-    "cross-env": "6.0.3",
-    "dotenv": "8.2.0",
-    "express": "4.17.1",
-    "express-async-errors": "^3.1.1",
-    "helmet": "^3.22.0",
-    "http-errors": "^1.7.3",
-    "http-status-codes": "^1.4.0",
-    "joi-objectid": "^3.0.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.11",
-    "morgan": "^1.10.0",
-    "npm": "^6.14.11",
-    "swagger-ui-express": "4.1.2",
-    "uuid": "3.3.3",
-    "winston": "^3.2.1",
-    "yamljs": "0.3.0"
-  },
-  "devDependencies": {
-    "eslint": "6.7.2",
-    "eslint-config-prettier": "6.7.0",
-    "eslint-plugin-node": "10.0.0",
-    "eslint-plugin-prettier": "3.1.1",
-    "husky": "3.1.0",
-    "lint-staged": "9.5.0",
-    "nodemon": "^2.0.2",
-    "prettier": "1.19.1"
+    "axios": "^0.27.2"
   }
 }
