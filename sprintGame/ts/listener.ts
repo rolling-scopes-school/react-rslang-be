@@ -36,6 +36,7 @@ function startGameListener() {
   buttonAnswer.forEach((elem) => {
     elem.addEventListener("click", getGameListener);
   });
+  window.addEventListener("keydown", getGameListenerKeydown);
 }
 
 export function getGameListener(event: Event) {
@@ -115,4 +116,79 @@ function playAudioCool() {
   audio.src = 'https://vsezvuki.com/data/630-whatsapp-korotky-rington.mp3';
   audio.currentTime = 0;
   audio.play();
+}
+
+function getGameListenerKeydown(event: KeyboardEvent) {
+  const counterSprint = document.querySelector(".counter-sprint");
+  const flagSprint = document.querySelectorAll(".flag-sprint");
+  const valueCounterSprint = document.querySelector(".value-counter-sprint");
+  const engWordSprint = document.querySelector(".eng-word-sprint");
+  const separatorTrueAnswer = <HTMLElement>document.querySelector(".separator-true-answer");
+  const separatorFalseAnswer = <HTMLElement>document.querySelector(".separator-false-answer");
+  const additionalCounterSprint = <HTMLSelectElement>(
+    document.querySelector(".additional-counter-sprint")
+  ); 
+  const engWordSprintNow = engWordSprint?.textContent;
+
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    if ((event.key === 'ArrowRight' && flagStartGame.value === "true") || (event.key === 'ArrowLeft' && flagStartGame.value === "false") ) {
+      console.log('true')
+    playAudioCool()
+    if (flagStartGame.value === 'true') {
+      answerSprint.countAnswer += 1;
+      if (engWordSprintNow) {
+        answerSprint.wordsAnswer.push(engWordSprintNow);
+      }
+    }
+    separatorTrueAnswer.style.display = "inline-block";
+    setTimeout(() => {
+      separatorTrueAnswer.style.display = "none";
+    }, 500)
+    if (counterSprint) {
+      counterSprint.textContent = (
+        Number(counterSprint.textContent) +
+        10 +
+        Number(valueCounterSprint?.textContent)
+      ).toString();
+    }
+    if (countflag < 2) {
+      countflag += 1;
+      flagSprint[countflag].classList.add("active");
+    } else if (countflag === 2) {
+      flagSprint.forEach((elem) => elem.classList.remove("active"));
+      countflag = -1;
+      if (
+        valueCounterSprint &&
+        Number(valueCounterSprint.textContent) <= 60
+      ) {
+        valueCounterSprint.textContent = `${
+          Number(valueCounterSprint.textContent) + 20
+        }`;
+
+      } else {
+        const flag1 = <HTMLElement>flagSprint[0];
+        const flag2 = <HTMLElement>flagSprint[1];
+        const flag3 = <HTMLElement>flagSprint[2];
+        flag1.style.display = "none";
+        flag3.style.display = "none";
+        flag2.classList.remove("active");
+      }
+      additionalCounterSprint.style.display = "block";
+    }
+  }
+
+  if ((event.key === 'ArrowLeft' && flagStartGame.value === "true") || (event.key === 'ArrowRight' && flagStartGame.value === "false")) {
+    console.log('false')
+    playAudioError()
+    separatorFalseAnswer.style.display = "inline-block";
+    setTimeout(() => {
+      separatorFalseAnswer.style.display = "none";
+    }, 500)
+    flagSprint.forEach((elem) => elem.classList.remove("active"));
+    countflag = -1;
+    answerSprint.countErr += 1;
+  }
+
+replaceWord(arrWords);
+ }
 }

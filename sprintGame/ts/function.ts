@@ -44,8 +44,12 @@ export function getramdomWord() {
     obj.numWord = flagStartGame.indexStart;
     obj.wordTranslate = flagStartGame.indexStart;
   } else {
+    const count = random(flagStartGame.indexStart)
+    console.log(count);
     obj.numWord = flagStartGame.indexStart;
-    obj.wordTranslate = flagStartGame.indexStart + 1;
+    if(count) {
+    obj.wordTranslate = count;
+    }
   }
   flagStartGame.indexStart += 1;
   return obj;
@@ -87,4 +91,12 @@ export function sortArrayWords(array : Array<IWords> | Array<number>) {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
+}
+
+function random(num: number) {
+  const randomNum = Math.floor(Math.random() * 100);
+  if(!(num === randomNum)) {
+    return randomNum
+  }
+  else { random(num) }
 }

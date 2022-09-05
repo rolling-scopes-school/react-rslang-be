@@ -63,6 +63,7 @@ export const startGame = async (arr: Array<IWords>) => {
   if(mainInfoContainer) {
     mainInfoContainer.innerHTML = html;
   }
+ 
 };
 
 export const endGame = async (result: string | null, countObj: IanswerSprint) => {
@@ -92,3 +93,4 @@ export const endGame = async (result: string | null, countObj: IanswerSprint) =>
     mainInfoContainer.innerHTML = html;
   }
 };
+
