@@ -33,7 +33,7 @@ export function startTimer() {
 export function getramdomWord() {
   const ar = [true, false];
   let rand = Math.round(Math.random());
-  flagStartGame.value = String(ar[rand]);
+  flagStartGame.value = String(ar[rand]); 
   const obj: IRamdom = {
     bool: ar[rand],
     numWord: NaN,

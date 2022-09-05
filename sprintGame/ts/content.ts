@@ -1,9 +1,10 @@
 import { IWords, IanswerSprint } from "./interface";
 import { getramdomWord } from "./function";
 
-const root = document.querySelector('.root');
+
 
 export const startPages = async () => {
+  const mainInfoContainer = document.querySelector(".main") as HTMLElement;
   const html = `
 <div class="container-wrapper">
   <div class="container-sprint">
@@ -25,13 +26,14 @@ export const startPages = async () => {
   </div>
 </div>
 `;
-  if(root) {
-    root.innerHTML = html;
+  if(mainInfoContainer) {
+    mainInfoContainer.innerHTML = html;
   }
 };
 
 //export const flagTrueFalse: IflagTrueFalse = {value: null};
 export const startGame = async (arr: Array<IWords>) => {
+  const mainInfoContainer = document.querySelector(".main") as HTMLElement;
   const count = getramdomWord();
   const html = `
 <div class="container-start-game">
@@ -58,12 +60,13 @@ export const startGame = async (arr: Array<IWords>) => {
   </div>
 </div>
 `;
-  if(root) {
-    root.innerHTML = html;
+  if(mainInfoContainer) {
+    mainInfoContainer.innerHTML = html;
   }
 };
 
 export const endGame = async (result: string | null, countObj: IanswerSprint) => {
+  const mainInfoContainer = document.querySelector(".main") as HTMLElement;
   let wordsAnswerBlock = ``;
   countObj.wordsAnswer.forEach(elem => {
     wordsAnswerBlock += `<div class="learn-word">${elem}</div>`
@@ -82,11 +85,10 @@ export const endGame = async (result: string | null, countObj: IanswerSprint) =>
         <span class="count-error-sprint">${countObj.countAnswer}</span>
       </div>
       <div class="words-answer-block">${wordsAnswerBlock}</div>
-      <button class="btm-close-sprint">Закрыть</button>
     </div>
   </div>
 `;
-  if(root) {
-    root.innerHTML = html;
+  if(mainInfoContainer) {
+    mainInfoContainer.innerHTML = html;
   }
 };

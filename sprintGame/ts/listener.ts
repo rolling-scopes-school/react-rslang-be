@@ -53,6 +53,9 @@ export function getGameListener(event: Event) {
     playAudioCool()
     if (flagStartGame.value === 'true') {
       answerSprint.countAnswer += 1;
+      if (engWordSprintNow) {
+        answerSprint.wordsAnswer.push(engWordSprintNow);
+      }
     }
     separatorTrueAnswer.style.display = "inline-block";
     setTimeout(() => {
@@ -98,9 +101,6 @@ export function getGameListener(event: Event) {
     flagSprint.forEach((elem) => elem.classList.remove("active"));
     countflag = -1;
     answerSprint.countErr += 1;
-    if (engWordSprintNow) {
-    answerSprint.wordsAnswer.push(engWordSprintNow);
-    }
   }
 replaceWord(arrWords);
 }

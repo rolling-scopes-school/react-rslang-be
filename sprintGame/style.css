@@ -113,7 +113,7 @@
   padding: 10px 0;
 }
 
-.btn-answer, .btm-close-sprint {
+.btn-answer {
   width: 150px;
   height: 40px;
   font-size: 20px;
@@ -179,11 +179,6 @@
 .result-sprint {
   font-size: 25px;
   padding-top: 20px;
-}
-
-.btm-close-sprint {
-  background-color: rgb(252, 27, 27);
-  margin: 20px 0;
 }
 
 .words-answer-block {
